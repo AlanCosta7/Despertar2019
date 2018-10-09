@@ -1,6 +1,7 @@
 <template>
-    <q-page padding style="max-width: 800px">
-        <q-timeline color="primary" style="padding: 0 24px;">
+  <q-page padding>
+    <q-scroll-area id="scrollarea">
+        <q-timeline color="primary" class="q-pa-lg">
             <h2>Programação</h2>
           <q-timeline-entry heading>Quarta-feira</q-timeline-entry>
     
@@ -197,20 +198,30 @@
           </div>
         </q-timeline-entry>
       </q-timeline>
-      </q-page>
+    </q-scroll-area>
+  </q-page>
 </template>
   
 <script>
+import { mapGetters } from 'vuex'
+
 export default {
   name: 'Programacao',
         data () {
             return {
             }
-        },
-        mounted() {
-          this.$store.dispatch('carregarUsuario') 
-
-        },
+        },   
+    mounted() {
+      var a = window.innerHeight;  
+      document.getElementById('scrollarea').style.height = a - 110 + 'px'
+    },    
+    computed: {
+      ...mapGetters({
+      loading: 'loading',
+      error: 'error',
+      user: 'user',
+      }),
+    },
 }
 </script>
   

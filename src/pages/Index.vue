@@ -1,31 +1,5 @@
 <template>
   <q-page>
-      <div class="perfil row flex flex-center">
-          <img :src=usuario.imageUrl v-if="usuario" class="imgperfil" alt="imagem perfil">
-          <h6 class="col-6 name">{{usuario.nome}}</h6>
-        <q-btn icon='star' flat class="col-1" id="star">        
-        </q-btn>
-        <q-btn icon='attach_money' flat class="col-1" id="fav" v-if="!youequipe" > 
-        </q-btn>
-        <q-btn icon='favorite' color='negative' flat class="col-1" v-if="youequipe" > 
-        </q-btn>
-      </div>
-    <q-modal v-model="jbbtv" maximized v-if="jbbtv" class="flex flex-center justify-center">
-      <div style="background: black">
-          <div class="q-video">
-          <iframe width="100%" style="height: auto; width:100%" height="auto" src="https://www.youtube.com/embed/JxLpyrT1S2s?autoplay=0" frameborder="0" allowfullscreen></iframe>
-          </div>
-      </div>
-      <q-btn
-      round
-      size="md"
-      style="right: 18px; bottom: 50px"
-      @click.native="sairtv()"
-      icon="tv_off"
-      class="fixed z-max btntv"
-    />
-    </q-modal>
-
     <q-modal v-model="equipe" maximized class="flex flex-center justify-center">
       <q-btn icon="close" round push color="negative" @click="equipe = false" style="left: 250px; top: 5px"></q-btn>
         <h4>Adicionar Equipe</h4>
@@ -55,14 +29,6 @@
       </div>
     </div>
       <q-btn
-        round
-        size="md"
-        style="right: 18px; bottom: 50px"
-        @click.native="jbbtvclick()"
-        icon="live_tv"
-        class="fixed btntv"
-      />
-      <q-btn
       round
       size="md"
       color="primary"
@@ -72,16 +38,12 @@
       icon="add"
       class="fixed"
     />
-    <div class="row btns" id="botao">
-      <q-btn color="primary" @click="dashboard()" outline icon="dashboard" class="btn col"></q-btn>
-      <q-btn color="primary" @click="aovivo()" outline class="btn col-6">ao vivo<q-spinner-rings color="red" :size="30" /></q-btn>
-      <q-btn color="primary" @click="chat()" outline icon="forum" class="btn col"></q-btn>
-    </div>
   </q-page>
 </template>
 
 <script>
 import * as firebase from 'firebase'
+import { mapGetters } from 'vuex'
   
 export default {
   name: 'PageIndex',
@@ -93,22 +55,7 @@ export default {
             }
 
         },
-        updated() {
-          if (this.usuario.inscrito == false) {
-            document.getElementById('star').style.color = '#cccccc'
-          } else {
-            document.getElementById('star').style.color = 'rgb(255, 196, 0)'
-          }
-
-          if (this.usuario.pago == false) {
-            document.getElementById('fav').style.color = '#cccccc'
-          } else {
-            document.getElementById('fav').style.color = 'rgb(255, 196, 0)'
-          }
-
-        },
         mounted() {
-          this.$store.dispatch('carregarUsuario') 
           this.$store.dispatch('carregaTimeLine') 
           this.$store.dispatch('carregaChat') 
           this.$store.dispatch('carregaListaUsuario') 
@@ -116,21 +63,7 @@ export default {
           this.$store.dispatch('carregaListaEquipe') 
         },
         methods: {
-          jbbtvclick () {
-            this.jbbtv = true
-          },
-          sairtv () {
-            this.jbbtv = false
-          },
-          aovivo() {
-            this.$router.push('/aovivo')
-          },
-          dashboard() {
-            this.$router.push('/index')
-          },
-          chat() {
-            this.$router.push('/chat')
-          }, 
+
           addequipe () {
             firebase.database().ref('equipe').update({
               listaequipe: this.listaequipe
@@ -139,6 +72,11 @@ export default {
           }
         },
     computed: {
+      ...mapGetters({
+      loading: 'loading',
+      error: 'error',
+      user: 'user',
+      }),
       youequipe () {
         var lista = this.$store.getters.listaEquipe
         var uid = this.user.uid
@@ -151,33 +89,10 @@ export default {
       admin () {
                 return this.$store.getters.user.email = 'alanpc7@gmail.com'
             },
-      booleanVar () {
-        return this.usuario.inscrito
-      },
-      usuario () {
-        return this.$store.getters.usuario
-      },
-      user() {
-        return this.$store.getters.user      
-      },
-      image () {
-        return this.$store.getters.usuario.image
-      },
-      usuariologado () {
-        return this.$store.getters.usuariologado
-      },
       listaUsuarios () {
         return this.$store.getters.listaUsuarios
       },
   },
-  watch: {
-      usuario (value) {
-            if (value !== null && value !== undefined) {
-              this.$store.getters.usuario
-            }
-      }
-    }
-
 }    
 </script>
 
@@ -224,8 +139,5 @@ export default {
     padding-left: 10px;
     font-weight: bold;
   }
-  .btntv {
-    background-image: linear-gradient(red, yellow);
-    color: white
-  }
+
 </style>

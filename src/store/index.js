@@ -4,30 +4,15 @@ import Vuex from 'vuex'
 import * as firebase from 'firebase'
 import { Loading, QSpinnerFacebook } from 'quasar'
 import { LocalStorage, SessionStorage } from 'quasar'
+import user from './user/index-firebase'
 
 Vue.use(Vuex)
 
 export default new Vuex.Store({
+  modules: {
+    user
+  },
   state: {
-    usuariologado: false,
-    user: {
-      email: '',
-      uid: ''
-    },
-    usuario: {
-      email: '',
-      uid: '',
-      name: '',
-      foto: '',
-      inscrito: false,
-      pago: false,
-      voto: 0,
-      participouSD: false,
-      participouS: false,
-      participouND: false,
-      participouN: false,
-      participouC: false  
-    },
     listaSudeste: [],
     listaSul: [],
     listaNordeste: [],
@@ -60,15 +45,6 @@ export default new Vuex.Store({
     setListaCentro (state, listaCentro) {
       state.listaCentro.push(listaCentro)
     },
-    setUser (state, payload) {
-        state.user = payload
-      },  
-    setUsuariologado (state, payload) {
-        state.usuariologado = payload
-      },    
-    setUsuario (state, payload) {
-        state.usuario = payload
-      }, 
     setListaTimeLine (state, listaTimeLine) {
         state.listaTimeLine.unshift(listaTimeLine)
       }, 
@@ -193,71 +169,6 @@ export default new Vuex.Store({
 
       })
     },
-    signUserUp ({commit}, payload) {
-        commit('setLoading', true)
-        commit('clearError')
-        firebase.auth().createUserWithEmailAndPassword(payload.email, payload.password)
-          .then(
-            user => {
-              commit('setLoading', false)
-              const newUser = {
-                email: user.user.email,
-                uid: user.user.uid,
-              }
-              commit('setUser', newUser)
-              commit('setUsuariologado', true)
-              LocalStorage.set('user', JSON.stringify({email: newUser.email, uid: newUser.uid }))  
-            }
-          )
-          .catch(
-            error => {
-              commit('setLoading', false)
-              var errorCode = error.code;
-              var errorMessage = error.message;
-              commit('setError', errorMessage)
-            }
-          )
-    },
-    signUserIn ({commit, getters}, payload) {
-        commit('setLoading', true)
-        commit('clearError')
-        firebase.auth().signInWithEmailAndPassword(payload.email, payload.password)
-          .catch(
-            error => {
-                commit('setLoading', false)
-                // Handle Errors here.
-                var errorCode = error.code;
-                var errorMessage = error.message;
-                if (errorCode === 'auth/wrong-password') {
-                  commit('setError', 'Senha inválida')
-                } if (errorCode === 'auth/invalid-email') {
-                  commit('setError', 'Email inválido')
-                } if (errorCode === 'auth/user-disabled') {
-                  commit('setError', 'Cadastro inativo')
-                } if (errorCode === 'auth/user-not-found') {
-                  commit('setError', 'Email e senha não correspondem')
-                }
-            }
-          )
-          .then(
-            user => {
-              commit('setLoading', false)
-              var newUser = {
-                email: user.user.email,
-                uid: user.user.uid,
-              }
-              commit('setUser', newUser)
-              LocalStorage.set('user', JSON.stringify({email: newUser.email, uid: newUser.uid})) 
-              var user = getters.user
-              var useruid = user.uid
-              var userlogado = firebase.database().ref('/usuarios/' + useruid + '/user').on('value', function(snapshot) {
-              var item = snapshot.val()
-              commit('setUsuario', item) 
-              commit('setUsuariologado', true)
-              LocalStorage.set('usuario', JSON.stringify(item))
-              })
-      })
-    },
     signInscricao ({commit, getters}, payload) {
       commit('setLoading', true)
       commit('clearError')
@@ -270,25 +181,25 @@ export default new Vuex.Store({
         telefone: payload.telefone,
         datanascimento: payload.datanascimento,
       }
-    var updates = {}    
-    var uid = getters.user.uid
-    updates['/usuarios/' + uid + '/inscricao'] = userData
-    
-    firebase.database().ref().update(updates)
-    .catch(
-      error => {
-        commit('setLoading', false)
-        var errorCode = error.code;
-        var errorMessage = error.message;
-        commit('setError', errorMessage)
-      }
-    )
+      var updates = {}    
+      var uid = getters.user.uid
+      updates['/usuarios/' + uid + '/inscricao'] = userData
+      
+      firebase.database().ref().update(updates)
+      .catch(
+        error => {
+          commit('setLoading', false)
+          var errorCode = error.code;
+          var errorMessage = error.message;
+          commit('setError', errorMessage)
+        }
+      )
 
-    var uid = getters.user.uid
-    firebase.database().ref('/usuarios/' + uid + '/user/').update({
-            inscrito: true
-    })
-      this.$router.push('/index')
+      var uid = getters.user.uid
+      firebase.database().ref('/usuarios/' + uid + '/user/').update({
+              inscrito: true
+      })
+        this.$router.push('/index')
     },
     setarUsuarios ({getters, commit}) {
       var user = getters.user
@@ -298,12 +209,6 @@ export default new Vuex.Store({
       commit('setUsuario', item) 
       LocalStorage.set('usuario', JSON.stringify(item))
       })
-    },
-    carregarUsuario ({commit}) {
-        let valueUserLocal = LocalStorage.get.item('user') 
-        commit('setUser', JSON.parse(valueUserLocal))
-        let valueUsuarioLocal = LocalStorage.get.item('usuario') 
-        commit('setUsuario', JSON.parse(valueUsuarioLocal))
     },
     carregaTimeLine ({getters, commit}) {
       commit('setLoading', true)
@@ -353,15 +258,6 @@ export default new Vuex.Store({
           }
       })
     },
-    logout ({commit}) {
-        commit('setUser', null)
-        commit('setUsuario', null)
-        commit('setUsuariologado', false)
-        LocalStorage.remove('user')
-        LocalStorage.remove('usuario')
-        firebase.auth().signOut()
-        this.$router.push("/")
-    }, 
     clearError ({commit}) {
       commit('clearError')
     },
@@ -384,15 +280,6 @@ export default new Vuex.Store({
       },
       listaCentro (state) {
         return state.listaCentro
-      },
-      user (state) {
-        return state.user
-      },
-      usuariologado (state) {
-        return state.usuariologado
-      },
-      usuario (state) {
-        return state.usuario
       },
       listaTimeLine (state) {
         return state.listaTimeLine

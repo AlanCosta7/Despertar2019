@@ -9,7 +9,8 @@ module.exports = function (ctx) {
       'firebase',
       'vuefire',
       'vuelidate',
-      'qrcode'
+      'qrcode',
+      'firebaseui'
     ],
     css: [
       'app.styl'
