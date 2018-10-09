@@ -57,7 +57,11 @@ export default {
         .then(user => handleSuccess(commit, user))
         .catch(error => handleError(commit, error))
     },
-
+    async deleteAccount({ commit }) {
+      return $auth.currentUser.delete().then(result => {
+        commit('setUser', null)
+      })
+    },
     async logout({ commit }) {
       commit('setLoading', true)
       await $auth.signOut()
@@ -68,6 +72,7 @@ export default {
 }
 
 async function createOrUpdateUser(user) {
+  debugger
   const newUser = {
     id: user.uid,
     name: user.displayName,

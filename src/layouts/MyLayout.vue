@@ -36,7 +36,8 @@
       <router-view />
       <div class="row z-top absolute-bottom">
           <q-btn color="primary" @click="programa()" outline icon="dashboard" class="btn col"></q-btn>
-          <q-btn color="primary" @click="inscricao()" outline class="btn col-6">inscrição</q-btn>
+          <q-btn color="primary" @click="inscricao()" outline class="btn col-6" v-if="inscrito">inscrição</q-btn>
+          <q-btn color="primary" @click="checkin()" outline class="btn col-6" v-if="!inscrito">Check-in</q-btn>
           <q-btn color="primary" @click="comochegar()" outline icon="room" class="btn col"></q-btn>
         </div>
     </q-page-container>
@@ -68,6 +69,9 @@ export default {
           programa () {
             this.$router.push('/')
           },
+          checkin () {
+            this.$router.push('/checkin')
+          },
           comochegar () {
             this.$router.push('/comochegar')
           },           
@@ -77,6 +81,11 @@ export default {
           sairtv () {
             this.jbbtv = false
           },
+  },
+  computed: {
+    inscrito () {
+
+    }
   }
 }
 </script>

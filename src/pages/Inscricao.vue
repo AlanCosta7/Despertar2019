@@ -94,13 +94,113 @@ import * as firebase from 'firebase'
                 telefone: '',
                 estado: [
                   {
-                    label: 'Rio de Janeiro',
-                    value: 'Rio de Janeiro'
+                    label: 'Acre (AC)',
+                    value: 'Acre (AC)'
+                  },
+                  { 
+                    label: 'Alagoas (AL)',
+                    value: 'Alagoas (AL)'
+                  },
+                  {  
+                    label: 'Amapá (AP)',
+                    value: 'Amapá (AP)'
                   },
                   {
-                    label: 'São Paulo',
-                    value: 'São Paulo'
-                  }
+                    label: 'Amazonas (AM)',
+                    value: 'Amazonas (AM)'
+                  },
+                  {  
+                    label: 'Bahia (BA)',
+                    value: 'Bahia (BA)'
+                  },
+                  {
+                    label: 'Ceará (CE)',
+                    value: 'Ceará (CE)'
+                  },
+                  {
+                    label: 'Distrito Federal (DF)',
+                    value: 'Distrito Federal (DF)'
+                  },
+                  {  
+                    label: 'Espírito Santo (ES)',
+                    value: 'Espírito Santo (ES)'
+                  },
+                  {
+                    label: 'Goiás (GO)',
+                    value: 'Goiás (GO)'
+                  },
+                  {
+                    label: 'Maranhão (MA)',
+                    value: 'Maranhão (MA)'
+                  },
+                  {
+                    label: 'Mato Grosso (MT)',
+                    value: 'Mato Grosso (MT)'
+                  },
+                  {
+                    label: 'Mato Grosso do Sul (MS)',
+                    value: 'Mato Grosso do Sul (MS)'
+                  },
+                  {
+                    label: 'Minas Gerais (MG)',
+                    value: 'Minas Gerais (MG)'
+                  },
+                  {
+                    label: 'Pará (PA)',
+                    value: 'Pará (PA)' 
+                  },
+                  {
+                    label: 'Paraíba (PB)',
+                    value: 'Paraíba (PB)'
+                  },
+                  {
+                    label: 'Paraná (PR)',
+                    value: 'Paraná (PR)'
+                  },
+                  {
+                    label: 'Pernambuco (PE)',
+                    value: 'Pernambuco (PE)'
+                  },
+                  {
+                    label: 'Piauí (PI)',
+                    value: 'Piauí (PI)'
+                  },
+                  {
+                    label: 'Rio de Janeiro (RJ)',
+                    value: 'Rio de Janeiro (RJ)'
+                  },
+                  {
+                    label: 'Rio Grande do Norte (RN)',
+                    value: 'Rio Grande do Norte (RN)'
+                  },
+                  {
+                    label: 'Rio Grande do Sul (RS)',
+                    value: 'Rio Grande do Sul (RS)'
+                  },
+                  {
+                    label: 'Rondônia (RO)',
+                    value: 'Rondônia (RO)'
+                  },
+                  {
+                    label: 'Roraima (RR)',
+                    value: 'Roraima (RR)'
+                  },
+                  {
+                    label: 'Santa Catarina (SC)',
+                    value: 'Santa Catarina (SC)'
+                  },
+                  {  
+                    label: 'São Paulo (SP)',
+                    value: 'São Paulo (SP)'
+                  },
+                  {
+                    label: 'Sergipe (SE)',
+                    value: 'Sergipe (SE)'
+                  },
+                  {
+                    label: 'Tocantins (TO)',
+                    value: 'Tocantins (TO)'
+                  },
                 ],
                 today,
                 state: new Date(),
@@ -132,30 +232,14 @@ import * as firebase from 'firebase'
               minLength: minLength(8)
             }
         },
-    mounted() {
-      this.$store.dispatch('carregarUsuario') 
-
-    },
-    computed: {
-        loading () {
-            return this.$store.getters.loading
-        },
-        error () {
-            return this.$store.getters.error
-        },
-        usuario () {
-            return this.$store.getters.usuario
-        },
-        user() {
-            return this.$store.getters.user      
-        }
-    },
     methods: {
         onInscricao () {  
           if (!this.nomecompleto || !this.rg || !this.modelestado || !this.igreja || !this.telefone || !this.datanascimento) {
                     return this.alerta = true
                 }
-            this.$store.dispatch('signInscricao', {nomecompleto: this.nomecompleto,
+            this.$store.dispatch('signInscricao', 
+                                              {
+                                                nomecompleto: this.nomecompleto,
                                                 rg: this.rg,
                                                 modelestado: this.modelestado,
                                                 igreja: this.igreja,
@@ -163,7 +247,6 @@ import * as firebase from 'firebase'
                                                 datanascimento: this.datanascimento,
                                                 email: this.user.email, 
                                                 }) 
-                                                this.$store.dispatch('carregarUsuario') 
         },
         onDismissed () {
             this.$store.dispatch('clearError')
@@ -171,7 +254,4 @@ import * as firebase from 'firebase'
     }
   }
 </script>
-  
-<style>
-</style>
   

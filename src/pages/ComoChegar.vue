@@ -1,6 +1,6 @@
 <template>
     <q-page>
-            <iframe src="https://www.google.com/maps/d/embed?mid=1ALnS8JLUtWxOfq5C8E2m15NY-RhCquBt&hl=pt-BR" width="100%" height="400px"></iframe>
+      <iframe id="iframe" src="https://www.google.com/maps/d/embed?mid=1ALnS8JLUtWxOfq5C8E2m15NY-RhCquBt&hl=pt-BR" width="100%"></iframe>
     </q-page>
 </template>
   
@@ -8,34 +8,8 @@
   export default {
     name: 'Comochegar',
     mounted() {
-      this.$store.dispatch('carregarUsuario') 
-
-    },
-    methods: {
-          aovivo() {
-            this.$router.push('/aovivo')
-          },
-          dashboard() {
-            this.$router.push('/index')
-          },
-          chat() {
-            this.$router.push('/chat')
-          }, 
-        }
-
+      var b = window.innerHeight;  
+      document.getElementById('iframe').style.height = b - 90 + 'px'
+    },  
   }
   </script>
-  
-  <style>
-     
-  .btn {
-    width: 100%;
-  }
-  .btns {
-    width: 100%;
-    position: absolute;
-    bottom: 0;
-    height: 40px;
-  }
-  </style>
-  

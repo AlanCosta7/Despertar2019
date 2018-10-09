@@ -199,7 +199,7 @@ export default new Vuex.Store({
       firebase.database().ref('/usuarios/' + uid + '/user/').update({
               inscrito: true
       })
-        this.$router.push('/index')
+        this.$router.push('/')
     },
     setarUsuarios ({getters, commit}) {
       var user = getters.user
