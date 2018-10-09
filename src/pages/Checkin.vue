@@ -1,5 +1,15 @@
 <template>
     <q-page class="flex flex-center">
+        <div class="perfil row flex flex-center">
+            <img :src=usuario.imageUrl v-if="usuario" class="imgperfil" alt="imagem perfil">
+            <h6 class="col-6 name">{{usuario.nome}}</h6>
+          <q-btn icon='star' flat class="col-1" id="star">        
+          </q-btn>
+          <q-btn icon='attach_money' flat class="col-1" id="fav" v-if="!youequipe" > 
+          </q-btn>
+          <q-btn icon='favorite' color='negative' flat class="col-1" v-if="youequipe" > 
+          </q-btn>
+        </div>
         <qrcode-vue :value="value"></qrcode-vue>
         <div class="row btns" id="botao">
           <q-btn color="primary" @click="dashboard()" outline icon="dashboard" class="btn col"></q-btn>
@@ -23,6 +33,18 @@ import QrcodeVue from 'qrcode.vue';
     QrcodeVue
   },
     mounted() {
+      if (this.usuario.inscrito == false) {
+            document.getElementById('star').style.color = '#cccccc'
+          } else {
+            document.getElementById('star').style.color = 'rgb(255, 196, 0)'
+          }
+
+          if (this.usuario.pago == false) {
+            document.getElementById('fav').style.color = '#cccccc'
+          } else {
+            document.getElementById('fav').style.color = 'rgb(255, 196, 0)'
+          }
+
         this.$store.dispatch('carregarUsuario') 
 
     },

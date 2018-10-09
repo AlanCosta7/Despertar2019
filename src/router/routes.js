@@ -1,22 +1,20 @@
-
 const routes = [
   {
     path: '/',
     component: () => import('layouts/MyLayout.vue'),
     children: [
-      { path: '/index', component: () => import('pages/Index.vue') },
-      { path: '', component: () => import('pages/user/login') },
-      { path: '/profile', component: () => import('pages/user/profile') },
-      { path: '/cadastro', component: () => import('pages/user/cadastro') },
-      { path: '/aovivo', component: () => import('pages/aoVivo') },
-      { path: '/chat', component: () => import('pages/Chat') },
-      { path: '/programa', component: () => import('pages/Programacao') },
-      { path: '/inscricao', component: () => import('pages/Inscricao') },
-      { path: '/checkin', component: () => import('pages/Checkin') },
-      { path: '/comochegar', component: () => import('pages/ComoChegar') },
-      { path: '/votacao', component: () => import('pages/Votacao') },
-      { path: '/staff', component: () => import('pages/Staff') },
-
+      { path: 'index', component: () => import('pages/Index.vue') },
+      { path: 'login', component: () => import('pages/auth/login') },
+      { path: '', component: () => import('pages/Programacao') },
+      { path: 'aovivo', component: () => import('pages/aoVivo') },
+      { path: 'inscricao', component: () => import('pages/Inscricao') },
+      { path: 'comochegar', component: () => import('pages/ComoChegar') },
+      { path: 'checkin', component: () => import('pages/Checkin') },
+      { path: 'votacao', component: () => import('pages/Votacao') },
+      { path: 'auth/success', component: () => import('pages/auth/success') },
+      { path: 'auth/error', component: () => import('pages/auth/error') },
+      { path: 'legal/terms-of-service', component: () => import('pages/legal/terms-of-service') },
+      { path: 'legal/privacy', component: () => import('pages/legal/privacy') }
     ]
   }
 ]
