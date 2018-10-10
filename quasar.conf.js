@@ -105,7 +105,8 @@ module.exports = function (ctx) {
         'QScrollArea',
         'QScrollObservable',
         'QInnerLoading',
-        'QChatMessage'
+        'QChatMessage',
+        'QPopover'
       ],
       directives: [
         'Ripple',

@@ -10,11 +10,29 @@
           </q-toolbar-title>    
           <q-btn
             round
+            v-if="user"
             size="sm"
             @click.native="jbbtvclick()"
             icon="live_tv"
             class="btntv"
           />
+
+          <q-btn icon="more_vert" flat v-if="user">
+            <!-- Direct child of target -->
+            <q-popover>
+              <!--
+                The DOM element(s) that make up the popup,
+                in this case a list:
+              -->
+              <q-list separator link>
+                <!-- notice `v-close-overlay` which closes popover -->
+                <q-item v-close-overlay @click.native="sair" flat>
+                  Sair
+                </q-item>
+              </q-list>
+            </q-popover>
+          </q-btn>
+
         </q-toolbar>
       </q-layout-header>
     <q-page-container>
@@ -34,9 +52,10 @@
           />
         </q-modal>
       <router-view />
-      <div class="row z-top absolute-bottom">
+      <div class="row z-top absolute-bottom" v-if="user">
           <q-btn color="primary" @click="programa()" outline icon="dashboard" class="btn col"></q-btn>
-          <q-btn color="primary" @click="inscricao()" outline class="btn col-6">inscrição</q-btn>
+          <q-btn color="primary" @click="inscricao()" outline class="btn col-6" v-if="inscrito">inscrição</q-btn>
+          <q-btn color="primary" @click="checkin()" outline class="btn col-6" v-if="!inscrito">Check-in</q-btn>
           <q-btn color="primary" @click="comochegar()" outline icon="room" class="btn col"></q-btn>
         </div>
     </q-page-container>
@@ -68,6 +87,9 @@ export default {
           programa () {
             this.$router.push('/')
           },
+          checkin () {
+            this.$router.push('/checkin')
+          },
           comochegar () {
             this.$router.push('/comochegar')
           },           
@@ -77,6 +99,14 @@ export default {
           sairtv () {
             this.jbbtv = false
           },
+          sair () {
+            this.$store.dispatch('logout')
+          }
+  },
+  computed: {
+    inscrito () {
+
+    }
   }
 }
 </script>

@@ -215,13 +215,6 @@ export default {
       var a = window.innerHeight;  
       document.getElementById('scrollarea').style.height = a - 110 + 'px'
     },    
-    computed: {
-      ...mapGetters({
-      loading: 'loading',
-      error: 'error',
-      user: 'user',
-      }),
-    },
 }
 </script>
   

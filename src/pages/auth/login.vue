@@ -3,16 +3,12 @@
        <q-layout class="flex column">
           <div class="bg-amber-8 cardtop">
             <router-link to="/">
-              <base-logo></base-logo>
             </router-link>
-          </div>
-          <div class="imagemthinking mobile-hide">
-            <img src="~assets/jbb_logo.png" alt="imagem" aria-hidden="true">
           </div>
           <div class="flex flex-center">
             <div class="flex flex-center column shadow-4 cardlogin" v-show="!user">
                 <h2 class="loginh2">Login</h2>
-                <p class="subtitulo">Acesse seu ambiente criativo</p>
+                <p>"Fé, amor e esperança"</p>
                 <div id="firebaseui-auth-container"></div>
             </div>
             <div class="flex flex-center column shadow-4 cardlogin" v-show="user">
@@ -27,14 +23,14 @@
           </div>
         <q-layout-footer reveal class="no-shadow">
           <div class="row items-center">
-            <div class="col-6">
+            <div class="col-12 q-pa-md">
               <base-social></base-social>
             </div>
-            <div class="col-6 text-right">
-              <q-btn flat class="q-mx-md lowercase">termos de uso</q-btn>
-              <q-btn flat class="q-mx-md lowercase">política de privacidade</q-btn>
-              <q-btn flat class="q-mx-md lowercase">sobre</q-btn>
-              <q-btn flat class="q-mx-md lowercase">contato</q-btn>
+            <div class="col-12 flex flex-center text-right">
+              <q-btn flat class="q-mx-xs lowercase">termos de uso</q-btn>
+              <q-btn flat class="q-mx-xs lowercase">política de privacidade</q-btn>
+              <q-btn flat class="q-mx-xs lowercase">sobre</q-btn>
+              <q-btn flat class="q-mx-xs lowercase">contato</q-btn>
             </div>
           </div>
         </q-layout-footer>
@@ -154,7 +150,7 @@ export default {
 .cardlogin {
   position: relative;
   margin-top: -100px;
-  width: 50%;
+  width: 80%;
   border-radius: 5px;
   background-color: white;
   padding: 4rem 2rem;

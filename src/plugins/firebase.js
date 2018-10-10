@@ -5,12 +5,12 @@ import 'firebase/firestore' // eslint-disable-line
 import { LocalStorage } from 'quasar'
 
 const firebaseConfig = {
-  apiKey: "AIzaSyBZnc-al51XODELJ5j32Mdqe8BpsSWmvWc",
-  authDomain: "despertar2019.firebaseapp.com",
-  databaseURL: "https://despertar2019.firebaseio.com",
-  projectId: "despertar2019",
-  storageBucket: "despertar2019.appspot.com",
-  messagingSenderId: "127706969910"
+  apiKey: 'AIzaSyDi_qIKYrBrSHCT7zHwQvb4EOuCCwbxuMk',
+  authDomain: 'garagethinking.firebaseapp.com',
+  databaseURL: 'https://garagethinking.firebaseio.com',
+  projectId: 'garagethinking',
+  storageBucket: 'garagethinking.appspot.com',
+  messagingSenderId: '674636123351'
 }
 
 // initialize Firebase from settings
@@ -22,7 +22,7 @@ const $firestore = firebase.firestore()
 $firestore.settings({ timestampsInSnapshots: true })
 
 // Enable logging
-firebase.database.enableLogging(!!process.env.DEV)
+// firebase.database.enableLogging(!!process.env.DEV)
 
 export default ({ router, store }) => {
   const localUser = JSON.parse(LocalStorage.get.item('user') || '{}')
@@ -32,7 +32,9 @@ export default ({ router, store }) => {
   $auth.onAuthStateChanged(user => {
     console.debug('@onAuthStateChanged()', { user })
     if (user) {
-      store.commit('setUser', { email: user.email, nome: user.displayName, uid: user.uid })
+      const { uid, email, emailVerified, displayName, photoURL } = user
+      // const providerData = user.providerData;
+      store.commit('setUser', { uid, email, emailVerified, displayName, photoURL, nome: displayName })
     } else {
       store.commit('setUser', null)
     }
