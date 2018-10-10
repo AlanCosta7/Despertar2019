@@ -1,14 +1,15 @@
 <template>
     <q-page class="flex flex-center">
-        <div class="bg-amber-8 absolute-top flex flex-center">
+        <div class="bg-amber-8 absolute-top items-center q-pt-xl column" style="height: 300px">
           <template v-if="user.photoURL">
-            <img class="avatar" :src="user.photoURL" height="150">
+            <img class="avatar" :src="user.photoURL" >
           </template>
-            <h3>{{user.nome}}</h3>
-            <q-btn color="red">Sair</q-btn>
+            <p>{{user.nome}}</p>
+            <p>chave: {{user.uid}}</p>
         </div>
-        <qrcode-vue :value="value"></qrcode-vue>
-
+        <q-card class="bg-white flex flex-center absolute" style="height: 200px; width: 200px">
+          <qrcode-vue :value="value"></qrcode-vue>
+        </q-card>
     </q-page>
 </template>
   
