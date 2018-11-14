@@ -30,18 +30,18 @@
       <q-modal v-model="jbbtv" maximized v-if="jbbtv" class="flex flex-center justify-center">
         <div style="background: black">
           <div class="q-video">
-            <iframe width="100%" style="height: auto; width:100%" height="auto" src="https://www.youtube.com/embed/JxLpyrT1S2s?autoplay=0"
+            <iframe width="100%" style="height: auto; width:100%" height="auto" :src=video
               frameborder="0" allowfullscreen></iframe>
           </div>
         </div>
-        <q-btn round size="md" style="right: 18px; bottom: 50px" @click.native="sairtv()" icon="tv_off" class="fixed z-max btntv"
+        <q-btn round size="md" style="right: 18px; bottom: 50px" @click.native="sairtv()" icon="close" class="fixed z-max btntv"
         />
       </q-modal>
       <router-view />
       <div class="row z-top absolute-bottom" v-if="user">
         <q-btn color="primary" @click="programa()" icon="home" class="btn col"></q-btn>
-        <q-btn color="primary" @click="inscricao()" class="btn col-6" v-if="inscrito">inscrição</q-btn>
-        <q-btn color="primary" @click="checkin()" class="btn col-6" v-if="!inscrito">Check-in</q-btn>
+        <q-btn color="primary" @click="inscricao()" class="btn col-6" v-if="!inscrito">inscrição</q-btn>
+        <q-btn color="primary" @click="checkin()" class="btn col-6" v-if="inscrito">Check-in</q-btn>
         <q-btn color="primary" @click="comochegar()" icon="room" class="btn col"></q-btn>
       </div>
     </q-page-container>
@@ -64,8 +64,12 @@
         loading: 'loading',
         error: 'error',
         user: 'user',
-        inscrito: 'null'
+        inscrito: 'null',
+        video: 'video'
       }),
+    },
+    mounted() {
+      console.log(this.video)
     },
     methods: {
       inscricao() {
@@ -81,6 +85,7 @@
         this.$router.push('/comochegar')
       },
       jbbtvclick() {
+        this.$store.dispatch('assistirVideo')
         this.jbbtv = true
       },
       sairtv() {

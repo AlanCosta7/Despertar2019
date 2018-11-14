@@ -23,7 +23,7 @@
             icon="turned_in_not"
           >
             <div>
-            Informações sobre o culto
+            Em breve mais informações sobre o culto
             </div>
           </q-timeline-entry>
     
@@ -34,7 +34,7 @@
             icon="brightness_3"
           >
             <div>
-            Informações sobre o luau
+            Em breve mais informações sobre o luau
             </div>
           </q-timeline-entry>
     
@@ -47,7 +47,7 @@
             icon="turned_in_not"
             >
             <div>
-            Informações sobre o culto
+            Em breve mais informações sobre o culto
             </div>
           </q-timeline-entry>
   
@@ -58,7 +58,7 @@
             icon="group"
           >
             <div>
-            Informações sobre o Lab
+            Em breve mais informações sobre o Lab
             </div>
           </q-timeline-entry>
     
@@ -80,7 +80,7 @@
             icon="brightness_4"
             >
             <div>
-            Informações sobre o Entardecer
+            Em breve mais informações sobre o Entardecer
             </div>
           </q-timeline-entry>
     
@@ -91,7 +91,7 @@
             icon="turned_in_not"
             >
             <div>
-            Informações sobre o culto
+            Em breve mais informações sobre o culto
             </div>
           </q-timeline-entry>
         
@@ -104,7 +104,7 @@
           icon="turned_in_not"
           >
           <div>
-          Informações sobre o culto
+          Em breve mais informações sobre o culto
           </div>
         </q-timeline-entry>
 
@@ -115,7 +115,7 @@
           icon="group"
         >
           <div>
-          Informações sobre o Fórum
+          Em breve mais informações sobre o Fórum
           </div>
         </q-timeline-entry>
   
@@ -137,7 +137,7 @@
           icon="local_library"
           >
           <div>
-          Informações sobre o lançamento de livros
+          Em breve mais informações sobre o lançamento de livros
           </div>
         </q-timeline-entry>
   
@@ -148,7 +148,7 @@
           icon="brightness_3"
           >
           <div>
-          Informações sobre o luau
+          Em breve mais informações sobre o luau
           </div>
         </q-timeline-entry>
 
@@ -161,7 +161,7 @@
           icon="turned_in_not"
           >
           <div>
-          Informações sobre o culto
+          Em breve mais informações sobre o culto
           </div>
         </q-timeline-entry>
 
@@ -183,7 +183,7 @@
           icon="turned_in_not"
         >
           <div>
-          Informações sobre o pré-culto
+          Em breve mais informações sobre o pré-culto
           </div>
         </q-timeline-entry>
       
@@ -194,7 +194,7 @@
           icon="turned_in_not"
         >
           <div>
-          Informações sobre o culto
+          Em breve mais informações sobre o culto
           </div>
         </q-timeline-entry>
       </q-timeline>

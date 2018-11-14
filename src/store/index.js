@@ -1,7 +1,7 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
 
-import { $firestore } from 'firebase'
+import { $db } from '../plugins/firebase'
 import { Loading, QSpinnerFacebook } from 'quasar'
 import { LocalStorage, SessionStorage } from 'quasar'
 import user from './user/index-firebase'
@@ -12,7 +12,8 @@ export default new Vuex.Store({
   modules: {
     user
   },
-  state: {    
+  state: {
+    video: '',
     loading: false,
     listaSudeste: [],
     listaSul: [],
@@ -25,7 +26,8 @@ export default new Vuex.Store({
     listaEquipe: [],
     loading: false,
     loadChat: false,
-    error: null
+    error: null,
+    inscrito: false
   },
   mutations: {
     setListaEquipe(state, listaEquipe) {
@@ -55,6 +57,9 @@ export default new Vuex.Store({
     setListaUsuarios(state, listaUsuarios) {
       state.listaUsuarios.push(listaUsuarios)
     },
+    setVideo(state, payload) {
+      state.video = payload
+    },
     setLoading(state, payload) {
       state.loading = payload
     },
@@ -66,9 +71,19 @@ export default new Vuex.Store({
     },
     clearError(state) {
       state.error = null
+    },
+    setInscrito(state, payload) {
+      state.inscrito = payload
     }
   },
   actions: {
+    assistirVideo({commit, getters}) {
+      const video = getters.video
+      return $db.ref('video/nome').once('value').then(function(snapshot) { 
+        commit('setVideo', snapshot.val())
+      })
+      .catch
+    },
     customLoading() {
       Loading.show({
         spinner: QSpinnerFacebook,
@@ -264,6 +279,12 @@ export default new Vuex.Store({
     },
   },
   getters: {
+    video(state) {
+      return state.video
+    },
+    inscrito(state) {
+      return state.inscrito
+    },
     listaEquipe(state) {
       return state.listaEquipe
     },

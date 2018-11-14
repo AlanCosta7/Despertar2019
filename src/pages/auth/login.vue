@@ -14,6 +14,7 @@
           <h2 class="q-headline">Você já está conectado!</h2>
           <h3>Redirecionando...</h3>
         </div>
+        <img src="../../assets/450x450.png" class="idevisu mobile-only absolute-bottom" alt="identidade visual">
       </div>
     </q-layout>
   </q-page>
@@ -168,5 +169,11 @@
     h2 {
       font-size: 5vw;
     }
+  }
+  .idevisu {
+    position: absolute;
+    width: 100%;
+    object-fit: cover;
+    height: 30%;
   }
 </style>
