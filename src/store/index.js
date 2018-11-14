@@ -5,7 +5,6 @@ import { $firestore } from 'firebase'
 import { Loading, QSpinnerFacebook } from 'quasar'
 import { LocalStorage, SessionStorage } from 'quasar'
 import user from './user/index-firebase'
-import { mapDocumentSnapshot, mapQuerySnapshot } from './helper'
 
 Vue.use(Vuex)
 
@@ -15,8 +14,6 @@ export default new Vuex.Store({
   },
   state: {    
     loading: false,
-    programa: [],
-    projectsWatcher: null,
     listaSudeste: [],
     listaSul: [],
     listaNordeste: [],
@@ -31,12 +28,6 @@ export default new Vuex.Store({
     error: null
   },
   mutations: {
-    setProjectsWatcher(state, payload) {
-      state.projectsWatcher = payload
-    },
-    setListaPrograma(state, programa) {
-      state.programa.push(programa)
-    },
     setListaEquipe(state, listaEquipe) {
       state.listaEquipe.push(listaEquipe)
     },
@@ -89,14 +80,6 @@ export default new Vuex.Store({
     },
     fecharload() {
       Loading.hide()
-    },
-    async loadProgram({ commit }) {
-      const collectionRef = $firestore.collection('Sabado')
-      const unsubscribe = collectionRef.onSnapshot(querySnapshot => {
-        const docs = querySnapshot.docs.map(mapDocumentSnapshot)
-        commit('setListaPrograma', docs)
-      })
-      commit('setProjectsWatcher', unsubscribe)
     },
     addListaCandidatos({ getters, commit }) {
       var listaSudeste = getters.listaSudeste
@@ -281,9 +264,6 @@ export default new Vuex.Store({
     },
   },
   getters: {
-    programa(state) {
-      return state.programa
-    },
     listaEquipe(state) {
       return state.listaEquipe
     },

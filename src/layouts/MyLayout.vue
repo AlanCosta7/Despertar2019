@@ -39,10 +39,10 @@
       </q-modal>
       <router-view />
       <div class="row z-top absolute-bottom" v-if="user">
-        <q-btn color="primary" @click="programa()" outline icon="home" class="btn col"></q-btn>
-        <q-btn color="primary" @click="inscricao()" outline class="btn col-6" v-if="inscrito">inscrição</q-btn>
-        <q-btn color="primary" @click="checkin()" outline class="btn col-6" v-if="!inscrito">Check-in</q-btn>
-        <q-btn color="primary" @click="comochegar()" outline icon="room" class="btn col"></q-btn>
+        <q-btn color="primary" @click="programa()" icon="home" class="btn col"></q-btn>
+        <q-btn color="primary" @click="inscricao()" class="btn col-6" v-if="inscrito">inscrição</q-btn>
+        <q-btn color="primary" @click="checkin()" class="btn col-6" v-if="!inscrito">Check-in</q-btn>
+        <q-btn color="primary" @click="comochegar()" icon="room" class="btn col"></q-btn>
       </div>
     </q-page-container>
   </q-layout>
@@ -66,11 +66,6 @@
         user: 'user',
         inscrito: 'null'
       }),
-    },
-    mounted() {
-      this.$store.dispatch('customLoading')
-      this.$store.dispatch('loadProgram')
-      this.$store.dispatch('fecharload')
     },
     methods: {
       inscricao() {
