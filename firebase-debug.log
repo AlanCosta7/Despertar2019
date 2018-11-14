@@ -1,0 +1,34 @@
+[debug] [2018-10-10T19:03:45.001Z] ----------------------------------------------------------------------
+[debug] [2018-10-10T19:03:45.005Z] Command:       C:\Program Files\nodejs\node.exe C:\Users\alanp\AppData\Roaming\npm\node_modules\firebase-tools\bin\firebase deploy
+[debug] [2018-10-10T19:03:45.005Z] CLI Version:   4.2.1
+[debug] [2018-10-10T19:03:45.005Z] Platform:      win32
+[debug] [2018-10-10T19:03:45.005Z] Node Version:  v8.11.4
+[debug] [2018-10-10T19:03:45.006Z] Time:          Wed Oct 10 2018 16:03:45 GMT-0300 (Hora oficial do Brasil)
+[debug] [2018-10-10T19:03:45.006Z] ----------------------------------------------------------------------
+[debug] 
+[debug] [2018-10-10T19:03:45.021Z] > command requires scopes: ["email","openid","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","https://www.googleapis.com/auth/cloud-platform"]
+[debug] [2018-10-10T19:03:45.023Z] > authorizing via signed-in user
+[debug] [2018-10-10T19:03:45.025Z] > refreshing access token with scopes: ["email","https://www.googleapis.com/auth/cloud-platform","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","openid"]
+[debug] [2018-10-10T19:03:45.025Z] >>> HTTP REQUEST POST https://www.googleapis.com/oauth2/v3/token  
+
+[debug] [2018-10-10T19:03:45.284Z] <<< HTTP RESPONSE 200
+[debug] [2018-10-10T19:03:45.470Z] >>> HTTP REQUEST GET https://admin.firebase.com/v1/projects/garagethinking  
+ 
+[debug] [2018-10-10T19:03:47.042Z] <<< HTTP RESPONSE 200
+[info] 
+[info] === Deploying to 'garagethinking'...
+[info] 
+[info] i  deploying database, storage, hosting
+[debug] [2018-10-10T19:03:47.576Z] Error: ENOENT: no such file or directory, open 'C:\Users\alanp\jbb\database.rules.json'
+    at Object.fs.openSync (fs.js:646:18)
+    at Object.fs.readFileSync (fs.js:551:33)
+    at Config.readProjectFile (C:\Users\alanp\AppData\Roaming\npm\node_modules\firebase-tools\lib\config.js:176:22)
+    at C:\Users\alanp\AppData\Roaming\npm\node_modules\firebase-tools\lib\deploy\database\prepare.js:52:42
+    at C:\Users\alanp\AppData\Roaming\npm\node_modules\firebase-tools\node_modules\lodash\lodash.js:4925:15
+    at baseForOwn (C:\Users\alanp\AppData\Roaming\npm\node_modules\firebase-tools\node_modules\lodash\lodash.js:3010:24)
+    at C:\Users\alanp\AppData\Roaming\npm\node_modules\firebase-tools\node_modules\lodash\lodash.js:4894:18
+    at Function.forEach (C:\Users\alanp\AppData\Roaming\npm\node_modules\firebase-tools\node_modules\lodash\lodash.js:9342:14)
+    at module.exports (C:\Users\alanp\AppData\Roaming\npm\node_modules\firebase-tools\lib\deploy\database\prepare.js:49:5)
+    at _chain (C:\Users\alanp\AppData\Roaming\npm\node_modules\firebase-tools\lib\deploy\index.js:26:38)
+[error] 
+[error] Error: An unexpected error has occurred.

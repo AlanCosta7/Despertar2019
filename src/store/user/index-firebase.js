@@ -67,7 +67,7 @@ export default {
       await $auth.signOut()
       commit('setUser', null)
       commit('setLoading', false)
-      this.$router.push('/login')
+      this.$router.push('/')
       LocalStorage.clear()
     }
   }

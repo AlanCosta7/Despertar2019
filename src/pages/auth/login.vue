@@ -116,7 +116,7 @@ export default {
       this.$q.loading.show({ delay: 300 })
       setTimeout(() => {
         this.$q.loading.hide()
-        this.$router.push("/")
+        this.$router.push("/programacao")
       }, redirectDelay)
     }
   },

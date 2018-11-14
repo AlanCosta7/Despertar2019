@@ -1,10 +1,11 @@
-import Vue from 'vue' 
-import Vuex from 'vuex' 
+import Vue from 'vue'
+import Vuex from 'vuex'
 
-import * as firebase from 'firebase'
+import { $firestore } from 'firebase'
 import { Loading, QSpinnerFacebook } from 'quasar'
 import { LocalStorage, SessionStorage } from 'quasar'
 import user from './user/index-firebase'
+import { mapDocumentSnapshot, mapQuerySnapshot } from './helper'
 
 Vue.use(Vuex)
 
@@ -12,7 +13,10 @@ export default new Vuex.Store({
   modules: {
     user
   },
-  state: {
+  state: {    
+    loading: false,
+    programa: [],
+    projectsWatcher: null,
     listaSudeste: [],
     listaSul: [],
     listaNordeste: [],
@@ -27,149 +31,163 @@ export default new Vuex.Store({
     error: null
   },
   mutations: {
-    setListaEquipe (state, listaEquipe) {
+    setProjectsWatcher(state, payload) {
+      state.projectsWatcher = payload
+    },
+    setListaPrograma(state, programa) {
+      state.programa.push(programa)
+    },
+    setListaEquipe(state, listaEquipe) {
       state.listaEquipe.push(listaEquipe)
     },
-    setListaSudeste (state, listaSudeste) {
+    setListaSudeste(state, listaSudeste) {
       state.listaSudeste.push(listaSudeste)
     },
-    setListaSul (state, listaSul) {
+    setListaSul(state, listaSul) {
       state.listaSul.push(listaSul)
     },
-    setListaNordeste (state, listaNordeste) {
+    setListaNordeste(state, listaNordeste) {
       state.listaNordeste.push(listaNordeste)
     },
-    setListaNorte (state, listaNorte) {
+    setListaNorte(state, listaNorte) {
       state.listaNorte.push(listaNorte)
     },
-    setListaCentro (state, listaCentro) {
+    setListaCentro(state, listaCentro) {
       state.listaCentro.push(listaCentro)
     },
-    setListaTimeLine (state, listaTimeLine) {
-        state.listaTimeLine.unshift(listaTimeLine)
-      }, 
-    setListaChat (state, listaChat) {
-        state.listaChat.push(listaChat)
-      },
-    setListaUsuarios (state, listaUsuarios) {
-        state.listaUsuarios.push(listaUsuarios)
-      },   
-    setLoading (state, payload) {
-        state.loading = payload
-      },
-    setLoadChat (state, payload) {
-        state.loadChat = payload
-      },
-    setError (state, payload) {
-        state.error = payload
-      },
-    clearError (state) {
-        state.error = null
-      }
+    setListaTimeLine(state, listaTimeLine) {
+      state.listaTimeLine.unshift(listaTimeLine)
+    },
+    setListaChat(state, listaChat) {
+      state.listaChat.push(listaChat)
+    },
+    setListaUsuarios(state, listaUsuarios) {
+      state.listaUsuarios.push(listaUsuarios)
+    },
+    setLoading(state, payload) {
+      state.loading = payload
+    },
+    setLoadChat(state, payload) {
+      state.loadChat = payload
+    },
+    setError(state, payload) {
+      state.error = payload
+    },
+    clearError(state) {
+      state.error = null
+    }
   },
   actions: {
-    customLoading () {
-      Loading.show ({
-            spinner: QSpinnerFacebook,
-            spinnerColor: 'primary',
-            spinnerSize: 140,
-            message: 'Aguarde só mais um pouquinho que já já você estará ao vivo no DESPERTAR 2019',
-            messageColor: 'orange'
+    customLoading() {
+      Loading.show({
+        spinner: QSpinnerFacebook,
+        spinnerColor: 'primary',
+        spinnerSize: 140,
+        message: 'Aguarde só mais um pouquinho que já já vamos apresentar o programa do DESPERTAR 2019',
+        messageColor: 'orange'
       })
-    },  
+    },
     fecharload() {
       Loading.hide()
     },
-    addListaCandidatos ({getters, commit}) {
+    async loadProgram({ commit }) {
+      const collectionRef = $firestore.collection('Sabado')
+      const unsubscribe = collectionRef.onSnapshot(querySnapshot => {
+        const docs = querySnapshot.docs.map(mapDocumentSnapshot)
+        commit('setListaPrograma', docs)
+      })
+      commit('setProjectsWatcher', unsubscribe)
+    },
+    addListaCandidatos({ getters, commit }) {
       var listaSudeste = getters.listaSudeste
       var listaSul = getters.listaSul
       var listaNordeste = getters.listaNordeste
       var listaNorte = getters.listaNorte
       var listaCentro = getters.listaCentro
       var listaUsuarios = getters.listaUsuarios
-    
+
       //SUDESTE
-      firebase.database().ref('eleicao/sudeste').on('value', function(snapshot) {
+      firebase.database().ref('eleicao/sudeste').on('value', function (snapshot) {
         var item = snapshot.val()
-        var arr = Object.keys(item).map(function (key) { return item[key]})
+        var arr = Object.keys(item).map(function (key) { return item[key] })
         listaSudeste.length = 0
-        
+
         for (var j = 0; j < arr.length; j++) {
           for (var y = 0; y < listaUsuarios.length; y++) {
-            if (arr[j] == listaUsuarios[y].uid) {  
-             commit('setListaSudeste', listaUsuarios[y] )  
+            if (arr[j] == listaUsuarios[y].uid) {
+              commit('setListaSudeste', listaUsuarios[y])
             }
-          }        
+          }
         }
 
       })
 
       //Sul
-      firebase.database().ref('eleicao/sul').on('value', function(snapshot) {
+      firebase.database().ref('eleicao/sul').on('value', function (snapshot) {
         var item = snapshot.val()
-        var arr = Object.keys(item).map(function (key) { return item[key]})
+        var arr = Object.keys(item).map(function (key) { return item[key] })
         listaSul.length = 0
-          
+
         for (var j = 0; j < arr.length; j++) {
           for (var y = 0; y < listaUsuarios.length; y++) {
-           if (arr[j] == listaUsuarios[y].uid) {  
-             commit('setListaSul', listaUsuarios[y] )  
+            if (arr[j] == listaUsuarios[y].uid) {
+              commit('setListaSul', listaUsuarios[y])
             }
-          }        
+          }
         }
 
       })
 
 
       //NORDESTE
-      firebase.database().ref('eleicao/nordeste').on('value', function(snapshot) {
+      firebase.database().ref('eleicao/nordeste').on('value', function (snapshot) {
         var item = snapshot.val()
-        var arr = Object.keys(item).map(function (key) { return item[key]})
+        var arr = Object.keys(item).map(function (key) { return item[key] })
         listaNordeste.length = 0
-          
+
         for (var j = 0; j < arr.length; j++) {
           for (var y = 0; y < listaUsuarios.length; y++) {
-           if (arr[j] == listaUsuarios[y].uid) {  
-             commit('setListaNordeste', listaUsuarios[y] )  
+            if (arr[j] == listaUsuarios[y].uid) {
+              commit('setListaNordeste', listaUsuarios[y])
             }
-          }        
+          }
         }
 
       })
 
       //NORTE
-      firebase.database().ref('eleicao/norte').on('value', function(snapshot) {
+      firebase.database().ref('eleicao/norte').on('value', function (snapshot) {
         var item = snapshot.val()
-        var arr = Object.keys(item).map(function (key) { return item[key]})
+        var arr = Object.keys(item).map(function (key) { return item[key] })
         listaNorte.length = 0
-          
+
         for (var j = 0; j < arr.length; j++) {
           for (var y = 0; y < listaUsuarios.length; y++) {
-           if (arr[j] == listaUsuarios[y].uid) {  
-             commit('setListaNorte', listaUsuarios[y] )  
+            if (arr[j] == listaUsuarios[y].uid) {
+              commit('setListaNorte', listaUsuarios[y])
             }
-          }        
+          }
         }
 
       })
 
       //CENTRO
-      firebase.database().ref('eleicao/centrooeste').on('value', function(snapshot) {
+      firebase.database().ref('eleicao/centrooeste').on('value', function (snapshot) {
         var item = snapshot.val()
-        var arr = Object.keys(item).map(function (key) { return item[key]})
+        var arr = Object.keys(item).map(function (key) { return item[key] })
         listaCentro.length = 0
-          
+
         for (var j = 0; j < arr.length; j++) {
           for (var y = 0; y < listaUsuarios.length; y++) {
-           if (arr[j] == listaUsuarios[y].uid) {  
-             commit('setListaCentro', listaUsuarios[y] )  
+            if (arr[j] == listaUsuarios[y].uid) {
+              commit('setListaCentro', listaUsuarios[y])
             }
-          }        
+          }
         }
 
       })
     },
-    signInscricao ({commit, getters}, payload) {
+    signInscricao({ commit, getters }, payload) {
       commit('setLoading', true)
       commit('clearError')
       var userData = {
@@ -181,123 +199,124 @@ export default new Vuex.Store({
         telefone: payload.telefone,
         datanascimento: payload.datanascimento,
       }
-      var updates = {}    
+      var updates = {}
       var uid = getters.user.uid
       updates['/usuarios/' + uid + '/inscricao'] = userData
-      
+
       firebase.database().ref().update(updates)
-      .catch(
-        error => {
-          commit('setLoading', false)
-          var errorCode = error.code;
-          var errorMessage = error.message;
-          commit('setError', errorMessage)
-        }
-      )
+        .catch(
+          error => {
+            commit('setLoading', false)
+            var errorCode = error.code;
+            var errorMessage = error.message;
+            commit('setError', errorMessage)
+          }
+        )
 
       var uid = getters.user.uid
       firebase.database().ref('/usuarios/' + uid + '/user/').update({
-              inscrito: true
+        inscrito: true
       })
-        this.$router.push('/')
+      this.$router.push('/')
     },
-    setarUsuarios ({getters, commit}) {
+    setarUsuarios({ getters, commit }) {
       var user = getters.user
       var useruid = user.uid
-      var userlogado = firebase.database().ref('/usuarios/' + useruid + '/user').on('value', function(snapshot) {
-      var item = snapshot.val()
-      commit('setUsuario', item) 
-      LocalStorage.set('usuario', JSON.stringify(item))
+      var userlogado = firebase.database().ref('/usuarios/' + useruid + '/user').on('value', function (snapshot) {
+        var item = snapshot.val()
+        commit('setUsuario', item)
+        LocalStorage.set('usuario', JSON.stringify(item))
       })
     },
-    carregaTimeLine ({getters, commit}) {
+    carregaTimeLine({ getters, commit }) {
       commit('setLoading', true)
       const listaTimeLine = getters.listaTimeLine
-      firebase.database().ref('/posts/').on('value', function(snapshot) {
+      firebase.database().ref('/posts/').on('value', function (snapshot) {
         var item = snapshot.val()
-        var arr = Object.keys(item).map(function (key) { return item[key]})
+        var arr = Object.keys(item).map(function (key) { return item[key] })
         listaTimeLine.length = 0
         for (var j = 0; j < arr.length; j++) {
-            commit('setListaTimeLine', arr[j])
+          commit('setListaTimeLine', arr[j])
         }
         commit('setLoading', false)
       })
     },
-    carregaChat ({getters, commit}) {
-      commit('setLoadChat', true) 
+    carregaChat({ getters, commit }) {
+      commit('setLoadChat', true)
       const listaChat = getters.listaChat
-      firebase.database().ref('/chat/').on('value', function(snapshot) {
+      firebase.database().ref('/chat/').on('value', function (snapshot) {
         var item = snapshot.val()
-        var arr = Object.keys(item).map(function (key) { return item[key]})
+        var arr = Object.keys(item).map(function (key) { return item[key] })
         listaChat.length = 0
         for (var j = 0; j < arr.length; j++) {
-            commit('setListaChat', arr[j])
+          commit('setListaChat', arr[j])
         }
         commit('setLoadChat', false)
       })
     },
-    carregaListaUsuario ({getters, commit}) {
+    carregaListaUsuario({ getters, commit }) {
       const listaUsuarios = getters.listaUsuarios
-      firebase.database().ref('usuarios').on('value', function(snapshot) {
+      firebase.database().ref('usuarios').on('value', function (snapshot) {
         var item = snapshot.val()
         var arr = Object.keys(item).map(function (key) { return item[key]; })
         listaUsuarios.length = 0
         for (var j = 0; j < arr.length; j++) {
-          commit('setListaUsuarios', arr[j].user) 
-          }
+          commit('setListaUsuarios', arr[j].user)
+        }
       })
     },
-    carregaListaEquipe ({getters, commit}) {
+    carregaListaEquipe({ getters, commit }) {
       const listaEquipe = getters.listaEquipe
-      firebase.database().ref('equipe/listaequipe').on('value', function(snapshot) {
+      firebase.database().ref('equipe/listaequipe').on('value', function (snapshot) {
         var item = snapshot.val()
         var arr = Object.keys(item).map(function (key) { return item[key]; })
         listaEquipe.length = 0
         for (var j = 0; j < arr.length; j++) {
-          commit('setListaEquipe', arr[j]) 
-          }
+          commit('setListaEquipe', arr[j])
+        }
       })
     },
-    clearError ({commit}) {
+    clearError({ commit }) {
       commit('clearError')
     },
   },
   getters: {
-      listaEquipe (state) {
-        return state.listaEquipe
-      },
-      listaSudeste (state) {
-        return state.listaSudeste
-      },
-      listaSul (state) {
-        return state.listaSul
-      },
-      listaNordeste (state) {
-        return state.listaNordeste
-      },
-      listaNorte (state) {
-        return state.listaNorte
-      },
-      listaCentro (state) {
-        return state.listaCentro
-      },
-      listaTimeLine (state) {
-        return state.listaTimeLine
-      },
-      listaChat (state) {
-        return state.listaChat
-      },
-      listaUsuarios (state) {
-        return state.listaUsuarios
-      },
-      loading (state) {
-        return state.loading
-      },
-      loadChat (state) {
-        return state.loadChat
-      },
-      error (state) {
-        return state.error
-      }
+    programa(state) {
+      return state.programa
+    },
+    listaEquipe(state) {
+      return state.listaEquipe
+    },
+    listaSudeste(state) {
+      return state.listaSudeste
+    },
+    listaSul(state) {
+      return state.listaSul
+    },
+    listaNordeste(state) {
+      return state.listaNordeste
+    },
+    listaNorte(state) {
+      return state.listaNorte
+    },
+    listaCentro(state) {
+      return state.listaCentro
+    },
+    listaTimeLine(state) {
+      return state.listaTimeLine
+    },
+    listaChat(state) {
+      return state.listaChat
+    },
+    listaUsuarios(state) {
+      return state.listaUsuarios
+    },
+    loading: state => state.loading,
+    loadChat(state) {
+      return state.loadChat
+    },
+    error(state) {
+      return state.error
+    }
   }
 })

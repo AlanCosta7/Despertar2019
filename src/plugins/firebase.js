@@ -5,12 +5,12 @@ import 'firebase/firestore' // eslint-disable-line
 import { LocalStorage } from 'quasar'
 
 const firebaseConfig = {
-  apiKey: 'AIzaSyDi_qIKYrBrSHCT7zHwQvb4EOuCCwbxuMk',
-  authDomain: 'garagethinking.firebaseapp.com',
-  databaseURL: 'https://garagethinking.firebaseio.com',
-  projectId: 'garagethinking',
-  storageBucket: 'garagethinking.appspot.com',
-  messagingSenderId: '674636123351'
+  apiKey: "AIzaSyBZnc-al51XODELJ5j32Mdqe8BpsSWmvWc",
+  authDomain: "despertar2019.firebaseapp.com",
+  databaseURL: "https://despertar2019.firebaseio.com",
+  projectId: "despertar2019",
+  storageBucket: "despertar2019.appspot.com",
+  messagingSenderId: "127706969910"
 }
 
 // initialize Firebase from settings

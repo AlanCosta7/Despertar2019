@@ -1,0 +1,61 @@
+service cloud.firestore {
+  match /databases/{database}/documents {
+    // match /{document=**} {
+    //   allow read, write;
+    // }
+
+    function isSignedIn() {
+      return request.auth != null;
+    }
+
+    function isPublic(rsc) {
+      return rsc.data.visibility == 'public';
+    }
+
+    function getRole(rsc) {
+      // Read from the "roles" map in the resource (rsc).
+      return rsc.data.roles[request.auth.uid];
+    }
+
+    function isOneOfRoles(rsc, array) {
+      // Determine if the user is one of an array of roles
+      return isSignedIn() && (getRole(rsc) in array);
+    }
+
+    // function isValidNewStory() {
+    //   // Valid if story does not exist and the new story has the correct owner.
+    //   return resource == null && request.resource.data.roles[request.auth.uid] == 'owner';
+    // }
+
+    match /users/{user} {
+
+    }
+
+    match /projects/{project} {
+      // TODO: Project rules go here...
+      // schema:
+      // relations: cards. { idRef, position, }
+      // mentions:
+    }
+
+    match /canvas/{canva} {
+      // TODO: Boards rules go here...
+      // canva.type: double-diamond, business-model, value-proposition, journey
+    }
+
+    match /items/{item} {
+      // TODO: Items rules go here...
+      // types: card
+    }
+
+    match /personas/{persona} {
+      // TODO: Personas rules go here...
+      // relateds: [ { idRef, type }, { idRef: 123, type: canvas }]
+    }
+
+    match /stories/{story} {
+      // TODO: Press Releases rules go here...
+      // types: press-release, pixar, pitch
+    }
+  }
+}
