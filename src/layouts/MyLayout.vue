@@ -6,23 +6,19 @@
           Despertar 2019
           <div slot="subtitle">Rio de Janeiro/RJ</div>
         </q-toolbar-title>
-        <q-btn round v-if="user" size="sm" @click.native="jbbtvclick()" icon="live_tv" class="btntv" />
-
+        <q-btn round size="sm" @click.native="jbbtvclick()" icon="live_tv" class="btntv" />
+      <!--
         <q-btn icon="more_vert" flat v-if="user">
-          <!-- Direct child of target -->
           <q-popover>
-            <!--
-                The DOM element(s) that make up the popup,
-                in this case a list:
-              -->
             <q-list separator link>
-              <!-- notice `v-close-overlay` which closes popover -->
               <q-item v-close-overlay @click.native="sair" flat>
                 Sair
               </q-item>
             </q-list>
           </q-popover>
         </q-btn>
+      -->
+
 
       </q-toolbar>
     </q-layout-header>
@@ -38,7 +34,7 @@
         />
       </q-modal>
       <router-view />
-      <div class="row z-top absolute-bottom" v-if="user">
+      <div class="row z-top absolute-bottom">
         <q-btn color="primary" @click="programa()" icon="home" class="btn col"></q-btn>
         <q-btn color="primary" @click="inscricao()" class="btn col-6" v-if="!inscrito">inscrição</q-btn>
         <q-btn color="primary" @click="checkin()" class="btn col-6" v-if="inscrito">Check-in</q-btn>

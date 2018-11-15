@@ -178,7 +178,7 @@ module.exports = function (ctx) {
       }
     },
     cordova: {
-      // id: 'org.cordova.quasar.app'
+       id: 'br.com.despertar2019'
     },
     electron: {
       // bundler: 'builder', // or 'packager'
