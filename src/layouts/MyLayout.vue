@@ -3,7 +3,7 @@
     <q-layout-header>
       <q-toolbar color="primary">
         <q-toolbar-title>
-          Desperar 2019
+          Despertar 2019
           <div slot="subtitle">Rio de Janeiro/RJ</div>
         </q-toolbar-title>
         <q-btn round v-if="user" size="sm" @click.native="jbbtvclick()" icon="live_tv" class="btntv" />
