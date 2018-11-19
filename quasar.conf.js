@@ -93,7 +93,7 @@ module.exports = function (ctx) {
         'QVideo',
         'QCollapsible',
         'QSpinner',
-        'QSpinnerRings',
+        'QSpinnerBars',
         'QSpinnerComment',
         'QProgress',
         'QActionSheet',
