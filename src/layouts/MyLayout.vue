@@ -3,7 +3,8 @@
     <q-layout-header>
       <q-toolbar color="primary">
         <q-toolbar-title>
-          Despertar 2019
+            <q-btn flat dense to='/' label="Despertar 2019" class="q-pa-none"/>
+           
           <div slot="subtitle">Rio de Janeiro/RJ</div>
         </q-toolbar-title>
         <div class="desktop-only">

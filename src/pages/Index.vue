@@ -1,7 +1,7 @@
 <template>
-  <q-page class="scren2">
-    <img src="../statics/icons/icon-512x512.png" class="scren mobile-only" alt="scren">
-    <h2 class="text-primary mobile-only">Seja Bem Vindo(a)!</h2>
+  <q-page>
+    <div class="win mobile-only" id="bg"></div>
+    <div class="win2 mobile-hide" id="bgg"></div>
   </q-page>
 </template>
 
@@ -11,6 +11,11 @@
     data() {
       return {
       }
+    },
+    mounted() {
+      var b = window.innerHeight;
+      document.getElementById('bg').style.height = b - 54 + 'px'
+      document.getElementById('bgg').style.height = b - 54 + 'px'
     },
     methods: {
       principal() {
@@ -25,13 +30,23 @@
   .scren {
     width: 100%;
   }
-  .scren2 {
-    background-image: url("../statics/icons/1024X768.png");
+
+  .win {
+    background-image: url('../statics/icons/bg1.png');
     background-repeat: no-repeat;
+    background-size: auto 100%;
+    background-position: center top;
     background-attachment: fixed;
-    background-size: cover
   }
-  h2{
+
+  .win2 {
+    background-image: url('../statics/icons/bg0.png');
+    background-repeat: no-repeat;
+    background-size: 100% auto;
+    background-position: center top;
+    background-attachment: fixed;
+  }
+  h2 {
     text-align: center;
     text-transform: uppercase;
   }
