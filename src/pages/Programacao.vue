@@ -1,5 +1,5 @@
 <template>
-  <q-page padding>
+  <q-page>
     <q-scroll-area id="scrollarea">
         <q-timeline color="primary" class="q-pa-lg">
             <h2>Programação</h2>
@@ -212,7 +212,7 @@ export default {
         },   
     mounted() {
       var a = window.innerHeight;  
-      document.getElementById('scrollarea').style.height = a - 110 + 'px'
+      document.getElementById('scrollarea').style.height = a - 85 + 'px'
     },    
 }
 </script>

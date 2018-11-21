@@ -22,6 +22,9 @@ export default {
                     var minhaposicao = { position: latlog, texto: texto }
                     commit('setPosition', minhaposicao) 
                 })
+            } else {
+                    output.innerHTML = "<p>Seu navegador não suporta Geolocalização</p>";
+                    return;
             }
         }
     }

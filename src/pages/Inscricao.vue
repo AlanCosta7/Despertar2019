@@ -13,7 +13,7 @@
     },
     mounted() {
       var b = window.innerHeight;
-      document.getElementById('inscricao').style.height = b - 90 + 'px'
+      document.getElementById('inscricao').style.height = b - 87 + 'px'
     },
   }
 </script>
