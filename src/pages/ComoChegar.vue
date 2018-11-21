@@ -1,8 +1,9 @@
 <template>
   <q-page>
     <div id="floating-panel">
-      <q-select placeholder="Partida" v-model="select" :options="selectOptions" color="primary" inverted class="fixed z-max" style="width: 250px; top: 50px" />
-      <q-btn icon="gps_fixed" round color="tertiary" flat class="fixed z-max" style="left: 18px; bottom: 50px" @click="addMinhaLoc(minhaposicao)"></q-btn>
+      <q-select placeholder="Partida" v-model="select" :options="selectOptions" color="primary" inverted class="fixed z-top" style="width: 100%; top: 50px" />
+      <q-btn icon="gps_fixed" round color="white" text-color="tertiary" class="fixed z-top" style="right: 18px; bottom: 50px" @click="addMinhaLoc(minhaposicao)"></q-btn>
+      <q-btn icon="navigation" round color="white" text-color="tertiary" class="fixed z-top" style="right: 18px; bottom: 100px" @click="abrirApp()"></q-btn>
     </div>
     <gmap-map id="maps" :center="center" :zoom="10" :map-type-id="mapTypeId">
       <gmap-marker v-for="(item, index) in markers" :key="index" :position="item.position" :click="center=item.position" />
@@ -16,6 +17,8 @@
 
 <script>
   import { mapGetters } from 'vuex'
+  import { openURL } from 'quasar'
+
 
   export default {
     name: 'Comochegar',
@@ -50,7 +53,10 @@
       })
     },
     methods: {
-      addMinhaLoc(value) {
+      abrirApp() {
+        openURL('https://www.google.com.br/maps/place/Igreja+Batista+Atitude/@-23.0074259,-43.434367,17z/data=!3m1!4b1!4m5!3m4!1s0x9bdcea0431dc37:0xe9f9682b65baee8d!8m2!3d-23.0074309!4d-43.4321783')
+      },
+      async addMinhaLoc(value) {
         var map;
         var directionsDisplay; // Instanciaremos ele mais tarde, que será o nosso google.maps.DirectionsRenderer
         var directionsService = new google.maps.DirectionsService();
@@ -58,17 +64,12 @@
         function initialize() {
           directionsDisplay = new google.maps.DirectionsRenderer(); // Instanciando...
           var latlng = new google.maps.LatLng(-23.0074613, -43.4323469);
-
+          
           var options = {
             zoom: 5,
             center: latlng,
             mapTypeId: google.maps.MapTypeId.TRANSIT,
-            zoomControl: true,
-            mapTypeControl: false,
-            scaleControl: false,
-            streetViewControl: true,
-            rotateControl: true,
-            fullscreenControl: false
+            disableDefaultUI: true
           };
 
           map = new google.maps.Map(document.getElementById("maps"), options);
@@ -87,13 +88,12 @@
           travelMode: google.maps.TravelMode.TRANSIT // meio de transporte, nesse caso, de carro
         };
 
-        directionsService.route(request, function (result, status) {
+        await directionsService.route(request, function (result, status) {
           if (status == google.maps.DirectionsStatus.OK) { // Se deu tudo certo
             directionsDisplay.setDirections(result); // Renderizamos no mapa o resultado
           }
         });
 
-        this.select.label = ''
       },
       addLocal() {
         var map;
@@ -108,12 +108,7 @@
             zoom: 5,
             center: latlng,
             mapTypeId: google.maps.MapTypeId.TRANSIT,
-            zoomControl: true,
-            mapTypeControl: false,
-            scaleControl: false,
-            streetViewControl: true,
-            rotateControl: true,
-            fullscreenControl: false
+            disableDefaultUI: true
           };
 
           map = new google.maps.Map(document.getElementById("maps"), options);
@@ -142,11 +137,14 @@
     updated() {
       this.addLocal()
     },
-    mounted() {
+    async mounted() {
       var b = window.innerHeight;
       document.getElementById('maps').style.height = b - 90 + 'px'
-      this.$store.dispatch('minhaposicao')
-    }
+      var minhaposicao = this.minhaposicao
+      await this.$store.dispatch('minhaposicao')
+      await this.addMinhaLoc(minhaposicao)
+    },
+    
   }
 </script>
 

@@ -30,7 +30,7 @@
       </q-toolbar>
     </q-layout-header>
     <q-page-container>
-      <q-modal v-model="jbbtv" maximized v-if="jbbtv" class="flex flex-center justify-center">
+      <q-modal v-model="jbbtv" maximized v-if="jbbtv" class="flex flex-center justify-center z-max">
         <div style="background: black">
           <div class="q-video">
             <iframe style="height: 400px; width:100%" :src=video frameborder="0" allowfullscreen class="mobile-only"></iframe>
@@ -74,8 +74,8 @@
         video: 'video'
       }),
     },
-    mounted() {
-      console.log(this.video)
+    created() {
+      this.$store.dispatch('minhaposicao')
     },
     methods: {
       inscricao() {

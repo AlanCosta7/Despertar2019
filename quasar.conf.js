@@ -129,9 +129,9 @@ module.exports = function (ctx) {
         loading: {
           // Loading defaults
         }
-      }
+      },
       // iconSet: ctx.theme.mat ? 'material-icons' : 'ionicons'
-      // i18n: 'de' // Quasar language
+      i18n: 'pt-br' // i18n: 'de' // Quasar language
     },
     // animations: 'all' --- includes all animations
     animations: [],
