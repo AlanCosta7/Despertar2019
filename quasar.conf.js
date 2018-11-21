@@ -10,7 +10,8 @@ module.exports = function (ctx) {
       'vuefire',
       'vuelidate',
       'qrcode',
-      'firebaseui'
+      'firebaseui',
+      'vue2googlemaps'
     ],
     css: [
       'app.styl'

@@ -13,7 +13,7 @@
           <q-btn color="white" @click="checkin()" class="btn" flat v-if="inscrito">Check-in</q-btn>
           <q-btn color="white" @click="comochegar()" flat class="btn">Como Chegar?</q-btn>
         </div>
-        <q-btn round size="sm" @click.native="jbbtvclick()" icon="live_tv" class="btntv mobile-only" />
+        <q-btn v-if="btnjbbtv" round size="sm" @click.native="jbbtvclick()" icon="live_tv" class="btntv mobile-only" />
         <!--
         <q-btn icon="more_vert" flat v-if="user">
           <q-popover>
@@ -62,7 +62,7 @@
     data() {
       return {
         jbbtv: false,
-
+        btnjbbtv: true
       }
     },
     computed: {

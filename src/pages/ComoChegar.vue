@@ -1,15 +1,166 @@
 <template>
   <q-page>
-    <iframe id="iframe" src="https://www.google.com/maps/d/embed?mid=1ALnS8JLUtWxOfq5C8E2m15NY-RhCquBt&hl=pt-BR" width="100%"></iframe>
+    <div id="floating-panel">
+      <q-select placeholder="Partida" v-model="select" :options="selectOptions" color="primary" inverted class="fixed z-max" style="width: 250px; top: 50px" />
+      <q-btn icon="gps_fixed" round color="tertiary" flat class="fixed z-max" style="left: 18px; bottom: 50px" @click="addMinhaLoc(minhaposicao)"></q-btn>
+    </div>
+    <gmap-map id="maps" :center="center" :zoom="10" :map-type-id="mapTypeId">
+      <gmap-marker v-for="(item, index) in markers" :key="index" :position="item.position" :click="center=item.position" />
+    </gmap-map>
   </q-page>
 </template>
 
 <script>
+
+</script>
+
+<script>
+  import { mapGetters } from 'vuex'
+
   export default {
     name: 'Comochegar',
+    data() {
+      return {
+        select: '',
+        selectOptions: [
+          {
+            label: 'Rodoviária Novo Rio',
+            icon: 'directions_bus',
+            value: 'Av. Francisco Bicalho, 1 - Santo Cristo, Rio de Janeiro - RJ, 20220-310'
+          },
+          {
+            label: 'Aeroporto Galeão',
+            icon: 'local_airport',
+            value: 'Av. Vinte de Janeiro, s/nº - Ilha do Governador, Rio de Janeiro - RJ, 21941-900'
+          },
+          {
+            label: 'Aeroporto Santos Dumont',
+            icon: 'local_airport',
+            value: 'Praça Sen. Salgado Filho, s/n - Centro, Rio de Janeiro - RJ, 20021-340'
+          }
+        ],
+        center: { lat: -22.8995995, lng: -43.2106174 },
+        mapTypeId: "roadmap",
+        markers: [{ position: { lat: -23.0074613, lng: -43.4323469 } }],
+      }
+    },
+    computed: {
+      ...mapGetters({
+        minhaposicao: 'minhaposicao'
+      })
+    },
+    methods: {
+      addMinhaLoc(value) {
+        var map;
+        var directionsDisplay; // Instanciaremos ele mais tarde, que será o nosso google.maps.DirectionsRenderer
+        var directionsService = new google.maps.DirectionsService();
+
+        function initialize() {
+          directionsDisplay = new google.maps.DirectionsRenderer(); // Instanciando...
+          var latlng = new google.maps.LatLng(-23.0074613, -43.4323469);
+
+          var options = {
+            zoom: 5,
+            center: latlng,
+            mapTypeId: google.maps.MapTypeId.TRANSIT,
+            zoomControl: true,
+            mapTypeControl: false,
+            scaleControl: false,
+            streetViewControl: true,
+            rotateControl: true,
+            fullscreenControl: false
+          };
+
+          map = new google.maps.Map(document.getElementById("maps"), options);
+          directionsDisplay.setMap(map); // Relacionamos o directionsDisplay com o mapa desejado
+
+        }
+
+        initialize();
+
+        var enderecoPartida = value.position;
+        var enderecoChegada = { lat: -23.0074613, lng: -43.4323469 };
+
+        var request = { // Novo objeto google.maps.DirectionsRequest, contendo:
+          origin: enderecoPartida, // origem
+          destination: enderecoChegada, // destino
+          travelMode: google.maps.TravelMode.TRANSIT // meio de transporte, nesse caso, de carro
+        };
+
+        directionsService.route(request, function (result, status) {
+          if (status == google.maps.DirectionsStatus.OK) { // Se deu tudo certo
+            directionsDisplay.setDirections(result); // Renderizamos no mapa o resultado
+          }
+        });
+
+        this.select.label = ''
+      },
+      addLocal() {
+        var map;
+        var directionsDisplay; // Instanciaremos ele mais tarde, que será o nosso google.maps.DirectionsRenderer
+        var directionsService = new google.maps.DirectionsService();
+
+        function initialize() {
+          directionsDisplay = new google.maps.DirectionsRenderer(); // Instanciando...
+          var latlng = new google.maps.LatLng(-23.0074613, -43.4323469);
+
+          var options = {
+            zoom: 5,
+            center: latlng,
+            mapTypeId: google.maps.MapTypeId.TRANSIT,
+            zoomControl: true,
+            mapTypeControl: false,
+            scaleControl: false,
+            streetViewControl: true,
+            rotateControl: true,
+            fullscreenControl: false
+          };
+
+          map = new google.maps.Map(document.getElementById("maps"), options);
+          directionsDisplay.setMap(map); // Relacionamos o directionsDisplay com o mapa desejado
+
+        }
+
+        initialize();
+
+        var enderecoPartida = this.select;
+        var enderecoChegada = { lat: -23.0074613, lng: -43.4323469 };
+
+        var request = { // Novo objeto google.maps.DirectionsRequest, contendo:
+          origin: enderecoPartida, // origem
+          destination: enderecoChegada, // destino
+          travelMode: google.maps.TravelMode.TRANSIT // meio de transporte, nesse caso, de carro
+        };
+
+        directionsService.route(request, function (result, status) {
+          if (status == google.maps.DirectionsStatus.OK) { // Se deu tudo certo
+            directionsDisplay.setDirections(result); // Renderizamos no mapa o resultado
+          }
+        });
+      },
+    },
+    updated() {
+      this.addLocal()
+    },
     mounted() {
       var b = window.innerHeight;
-      document.getElementById('iframe').style.height = b - 90 + 'px'
-    },
+      document.getElementById('maps').style.height = b - 90 + 'px'
+      this.$store.dispatch('minhaposicao')
+    }
   }
 </script>
+
+<style>
+  .vue-map-container {
+    max-width: 100%
+  }
+
+  .textname {
+    position: absolute;
+    left: 80px;
+    bottom: 55px;
+    font-size: .75em;
+    width: 75%;
+    color: #49748e;
+  }
+</style>

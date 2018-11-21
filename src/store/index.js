@@ -5,12 +5,13 @@ import { $db } from '../plugins/firebase'
 import { Loading, QSpinnerFacebook } from 'quasar'
 import { LocalStorage, SessionStorage } from 'quasar'
 import user from './user/index-firebase'
+import maps from './maps/index-maps'
 
 Vue.use(Vuex)
 
 export default new Vuex.Store({
   modules: {
-    user
+    user, maps
   },
   state: {
     video: '',
