@@ -7,13 +7,13 @@
            
           <div slot="subtitle">Rio de Janeiro/RJ</div>
         </q-toolbar-title>
+        <q-btn v-if="btnjbbtv" round size="sm" @click.native="jbbtvclick()" icon="live_tv" class="btntv q-mr-lg" />
         <div class="desktop-only">
           <q-btn color="white" @click="programa()" flat class="btn">Programa</q-btn>
           <q-btn color="white" @click="inscricao()" class="btn" flat v-if="!inscrito">inscrição</q-btn>
           <q-btn color="white" @click="checkin()" class="btn" flat v-if="inscrito">Check-in</q-btn>
           <q-btn color="white" @click="comochegar()" flat class="btn">Como Chegar?</q-btn>
         </div>
-        <q-btn v-if="btnjbbtv" round size="sm" @click.native="jbbtvclick()" icon="live_tv" class="btntv mobile-only" />
         <!--
         <q-btn icon="more_vert" flat v-if="user">
           <q-popover>
@@ -37,12 +37,10 @@
             <iframe style="height: 700px; width:100%" :src=video frameborder="0" allowfullscreen class="desktop-only"></iframe>
           </div>
         </div>
-        <q-btn round size="md" style="right: 18px; bottom: 50px" @click.native="sairtv()" icon="close" class="fixed z-max btntv mobile-only"></q-btn>
-        <q-btn round size="xl" style="right: 70px; bottom: 50px" @click.native="sairtv()" icon="close" class="fixed z-max btntv desktop-only"></q-btn>
+        <q-btn round size="md" style="right: 18px; bottom: 50px" @click.native="sairtv()" icon="close" class="fixed z-max btntv q-ma-lg"></q-btn>
       </q-modal>
       <router-view />
       <q-page-sticky position="bottom-right" :offset="[50, 50]">
-        <q-btn round size="xl" @click.native="jbbtvclick()" icon="live_tv" class="btntv2 z-max desktop-only" />
       </q-page-sticky>
       <div class="row z-max absolute-bottom mobile-only">
         <q-btn color="primary" @click="programa()" icon="home" class="btn col"></q-btn>

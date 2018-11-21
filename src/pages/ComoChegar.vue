@@ -2,8 +2,8 @@
   <q-page>
     <div id="floating-panel">
       <q-select placeholder="Partida" v-model="select" :options="selectOptions" color="primary" inverted class="fixed z-top" style="width: 100%; top: 50px" />
-      <q-btn icon="gps_fixed" round color="white" text-color="tertiary" class="fixed z-top" style="right: 18px; bottom: 60px" @click="addMinhaLoc(minhaposicao)"></q-btn>
-      <q-btn icon="navigation" round color="white" text-color="tertiary" class="fixed z-top" style="right: 18px; bottom: 110px" @click="abrirApp()"></q-btn>
+      <q-btn icon="gps_fixed" round color="white" text-color="tertiary" class="fixed z-top q-mr-lg" style="right: 18px; bottom: 60px" @click="addMinhaLoc(minhaposicao)"></q-btn>
+      <q-btn icon="navigation" round color="white" text-color="tertiary" class="fixed z-top q-mr-lg" style="right: 18px; bottom: 110px" @click="abrirApp()"></q-btn>
     </div>
     <gmap-map id="maps" :center="center" :zoom="10" :map-type-id="mapTypeId">
       <gmap-marker v-for="(item, index) in markers" :key="index" :position="item.position" :click="center=item.position" />
