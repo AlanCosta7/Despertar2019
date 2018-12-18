@@ -80,7 +80,7 @@
         this.$router.push('/inscricao')
       },
       programa() {
-        this.$router.push('/programacao')
+        this.$router.push('/')
       },
       checkin() {
         this.$router.push('/checkin')
