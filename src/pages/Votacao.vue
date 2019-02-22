@@ -1,7 +1,6 @@
 <template>
     <q-page>
       <q-layout>
-        <q-btn color="primary" @click="votar = true" v-if="admin">Editar</q-btn>
         <q-btn
             v-if="telacheia"
             color="secondary"
@@ -107,7 +106,7 @@
            </q-modal-layout>
         </q-modal>
 
-        <q-list class="flex flex-center items-start">
+        <q-list class="flex flex-center items-start cardeleicao">
                 <h4>Sudeste</h4>
                 <q-item v-for='item in listaSudeste' :key='item.id' class="row">   
                   </div>  
@@ -129,7 +128,7 @@
                 </q-item>
         </q-list>       
         
-        <q-list class="flex-center row items-start">
+        <q-list class="flex-center row items-start cardeleicao">
                 <h4>Sul</h4>
                 <q-item v-for='item in listaSul' :key='item.id'>  
                     <q-card class="flex flex-center row">
@@ -150,7 +149,7 @@
                 </q-item>
         </q-list> 
 
-        <q-list class="flex-center row items-start">
+        <q-list class="flex-center row items-start cardeleicao">
                 <h4>Nordeste</h4>
                 <q-item v-for='item in listaNordeste' :key='item.id'>  
                     <q-card class="flex flex-center row">
@@ -171,7 +170,7 @@
                 </q-item>
         </q-list> 
 
-        <q-list class="flex-center row items-start">
+        <q-list class="flex-center row items-start cardeleicao">
                 <h4>Norte</h4>
                 <q-item v-for='item in listaNorte' :key='item.id'>  
                     <q-card class="flex flex-center row">
@@ -192,7 +191,7 @@
                 </q-item>
         </q-list> 
 
-        <q-list class="flex-center row items-start">
+        <q-list class="flex-center row items-start cardeleicao">
                 <h4>Centro-Oeste</h4>
                 <q-item v-for='item in listaCentro' :key='item.id'>  
                     <q-card class="flex flex-center row">
@@ -220,6 +219,8 @@
 <script>
 import { uid, filter } from 'quasar'
 import firebase from 'firebase'
+import { mapGetters } from 'vuex'
+import Vuex from 'vuex'
 
 export default {
         name: 'VotarPage',
@@ -241,11 +242,6 @@ export default {
                 telacheia: this.$q.platform.is.desktop
 
             }
-        },
-        mounted () {
-            this.$store.dispatch('carregarUsuario') 
-            this.$store.dispatch('carregaListaUsuario') 
-            this.$store.dispatch('addListaCandidatos') 
         },
         methods: {
             toggleFullscreen () {
@@ -348,6 +344,11 @@ export default {
             }   
         },
         computed: {
+            ...mapGetters({
+                loading: 'loading',
+                error: 'error',
+                user: 'currentUser',
+            }),
             participouSD () {
                 return this.$store.getters.usuario.participouSD
             },
@@ -389,18 +390,6 @@ export default {
             },
             admin () {
                 return this.$store.getters.user.email = 'alanpc7@gmail.com'
-            },
-            loading () {
-                return this.$store.getters.loading
-            },
-            error () {
-                return this.$store.getters.error
-            },
-            usuario () {
-                return this.$store.getters.usuario
-           },
-            user() {
-                return this.$store.getters.user      
             }
         }
     }
@@ -425,5 +414,6 @@ export default {
         bottom: 0;
         height: 40px;
     }
+
 </style>
       

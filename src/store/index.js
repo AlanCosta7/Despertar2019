@@ -14,6 +14,7 @@ export default new Vuex.Store({
     user, maps
   },
   state: {
+    inscricao: "https://www.pallua.com.br/captacao/projeto/evento_despertar_2019",
     video: '',
     loading: false,
     listaSudeste: [],
@@ -25,7 +26,6 @@ export default new Vuex.Store({
     listaChat: [],
     listaUsuarios: [],
     listaEquipe: [],
-    loading: false,
     loadChat: false,
     error: null,
     inscrito: false
@@ -78,6 +78,13 @@ export default new Vuex.Store({
     }
   },
   actions: {
+    assistirVideoPromo({commit, getters}) {
+      const video = getters.video
+      return $db.ref('videopromo').once('value').then(function(snapshot) { 
+        commit('setVideo', snapshot.val())
+      })
+      .catch
+    },
     assistirVideo({commit, getters}) {
       const video = getters.video
       return $db.ref('video/nome').once('value').then(function(snapshot) { 
@@ -90,8 +97,6 @@ export default new Vuex.Store({
         spinner: QSpinnerFacebook,
         spinnerColor: 'primary',
         spinnerSize: 140,
-        message: 'Aguarde só mais um pouquinho que já já vamos apresentar o programa do DESPERTAR 2019',
-        messageColor: 'orange'
       })
     },
     fecharload() {
@@ -227,18 +232,22 @@ export default new Vuex.Store({
         LocalStorage.set('usuario', JSON.stringify(item))
       })
     },
-    carregaTimeLine({ getters, commit }) {
+    async carregaTimeLine({ getters, commit }) {
+
       commit('setLoading', true)
       const listaTimeLine = getters.listaTimeLine
-      firebase.database().ref('/posts/').on('value', function (snapshot) {
+      $db.ref('/posts/').on('value', function (snapshot) {
         var item = snapshot.val()
         var arr = Object.keys(item).map(function (key) { return item[key] })
         listaTimeLine.length = 0
         for (var j = 0; j < arr.length; j++) {
           commit('setListaTimeLine', arr[j])
+          
         }
-        commit('setLoading', false)
+
       })
+      commit('setLoading', false)
+
     },
     carregaChat({ getters, commit }) {
       commit('setLoadChat', true)
@@ -253,28 +262,6 @@ export default new Vuex.Store({
         commit('setLoadChat', false)
       })
     },
-    carregaListaUsuario({ getters, commit }) {
-      const listaUsuarios = getters.listaUsuarios
-      firebase.database().ref('usuarios').on('value', function (snapshot) {
-        var item = snapshot.val()
-        var arr = Object.keys(item).map(function (key) { return item[key]; })
-        listaUsuarios.length = 0
-        for (var j = 0; j < arr.length; j++) {
-          commit('setListaUsuarios', arr[j].user)
-        }
-      })
-    },
-    carregaListaEquipe({ getters, commit }) {
-      const listaEquipe = getters.listaEquipe
-      firebase.database().ref('equipe/listaequipe').on('value', function (snapshot) {
-        var item = snapshot.val()
-        var arr = Object.keys(item).map(function (key) { return item[key]; })
-        listaEquipe.length = 0
-        for (var j = 0; j < arr.length; j++) {
-          commit('setListaEquipe', arr[j])
-        }
-      })
-    },
     clearError({ commit }) {
       commit('clearError')
     },
@@ -282,6 +269,9 @@ export default new Vuex.Store({
   getters: {
     video(state) {
       return state.video
+    },
+    inscricao(state) {
+      return state.inscricao
     },
     inscrito(state) {
       return state.inscrito

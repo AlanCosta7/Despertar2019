@@ -3,10 +3,10 @@ const routes = [
     path: '/',
     component: () => import('layouts/MyLayout.vue'),
     children: [
-      { path: '', component: () => import('pages/Index.vue') },
+      { path: '', name:'index', component: () => import('pages/Index.vue') },
       { path: 'login', component: () => import('pages/auth/login') },
       { path: 'programacao', component: () => import('pages/Programacao') },
-      { path: 'aovivo', component: () => import('pages/aoVivo') },
+      { path: 'feed', component: () => import('pages/aoVivo') },
       { path: 'inscricao', component: () => import('pages/Inscricao') },
       { path: 'comochegar', component: () => import('pages/ComoChegar') },
       { path: 'checkin', component: () => import('pages/Checkin') },

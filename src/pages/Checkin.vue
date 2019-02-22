@@ -4,7 +4,7 @@
       <template v-if="user.photoURL">
         <img class="avatar" :src="user.photoURL" id="photoURL">
       </template>
-      <p class="q-ma-sm"><b>{{user.nome}}</b></p>
+      <p class="q-mt-xl"><b>{{user.email}}</b></p>
     </div>
     <q-card class="bg-white flex flex-center absolute" style="height: 200px; width: 200px">
       <qrcode-vue :value="value"></qrcode-vue>
@@ -31,7 +31,7 @@
       ...mapGetters({
         loading: 'loading',
         error: 'error',
-        user: 'user',
+        user: 'currentUser',
         value: 'user.uid'
       })
     }

@@ -1,49 +1,31 @@
 import { LocalStorage } from 'quasar'
 import { $auth } from '../../plugins/firebase'
+import { Notify } from 'quasar'
 
 export default {
   namespaced: false,
-  state: { user: null },
+  state: { currentUser: null },
   getters: {
-    user(state) {
-      return state.user
+    currentUser(state) {
+      return state.currentUser
     },
     isAuthenticated(state) {
-      return !!state.user
+      return !!state.currentUser
     }
   },
   mutations: {
     setUser(state, payload) {
-      state.user = payload
+      state.currentUser = payload
       LocalStorage.set('user', JSON.stringify(payload))
     }
   },
   actions: {
-    createUserWithEmailAndPassword({ commit }, payload) {
+    signUserIn({ commit }, payload) {
       commit('setLoading', true)
       commit('clearError')
-      $auth
-        .createUserWithEmailAndPassword(payload.email, payload.password)
-        .then(user => handleSuccess(commit, user))
-        .catch(error => handleError(commit, error))
-    },
-
-    signInWithEmailAndPassword({ commit }, payload) {
-      commit('setLoading', true)
-      commit('clearError')
+      this.$router.push('/')
       return $auth
         .signInWithEmailAndPassword(payload.email, payload.password)
-        .then(createOrUpdateUser)
-        .then(user => handleSuccess(commit, user))
-        .catch(error => handleError(commit, error))
-    },
-
-    signInWithPopup({ commit }, { provider }) {
-      commit('setLoading', true)
-      commit('clearError')
-      return $auth
-        .signInWithPopup(provider)
-        .then(createOrUpdateUser)
         .then(user => handleSuccess(commit, user))
         .catch(error => handleError(commit, error))
     },
@@ -51,9 +33,9 @@ export default {
     signInWithRedirect({ commit }, { provider }) {
       commit('setLoading', true)
       commit('clearError')
+      this.$router.push('/')
       return $auth
         .signInWithRedirect(provider)
-        .then(createOrUpdateUser)
         .then(user => handleSuccess(commit, user))
         .catch(error => handleError(commit, error))
     },
@@ -65,30 +47,35 @@ export default {
     async logout({ commit }) {
       commit('setLoading', true)
       await $auth.signOut()
+      
+      Notify.create({
+        message: 'Você foi deslogado com sucesso!',
+        timeout: 1000,
+        type: 'negative',
+        color: 'negative',
+        textColor: 'white',
+        position: 'top',
+      })       
+
       commit('setUser', null)
-      commit('setLoading', false)
       this.$router.push('/')
       LocalStorage.clear()
+      commit('setLoading', false)
     }
   }
-}
-
-async function createOrUpdateUser(user) {
-  debugger
-  const newUser = {
-    id: user.uid,
-    name: user.displayName,
-    email: user.email,
-    photoUrl: user.photoURL
-  }
-  const paht = `/users/${user.uid}/profile`
-  await $db.ref(path).set(newUser)
-  return newUser
 }
 
 function handleSuccess(commit, user) {
   commit('setLoading', false)
   commit('setUser', user)
+  Notify.create({
+    message: 'Você foi logado com sucesso!',
+    timeout: 1000,
+    type: 'positive',
+    color: 'positive',
+    textColor: 'white',
+    position: 'top',
+  })
 }
 
 function handleError(commit, error) {
