@@ -7,12 +7,14 @@
           <q-btn flat dense to='/' label="Despertar 2019" class="q-pa-none despertar" />
           <div slot="subtitle" class="rio">Rio de Janeiro/RJ</div>
         </q-toolbar-title>
-        <q-btn v-if="btnjbbtv" round size="sm" @click.native="jbbtvclick()" icon="live_tv" class="btntv q-mr-lg" />
+        <q-btn v-if="btnjbbtv" round size="sm" @click.native="jbbtvclick()" icon="live_tv" class="btntv q-mr-xs" />
       </q-toolbar>
     </q-layout-header>
-
-    <q-layout-drawer ref="menuDrawer" content-class="bg-neutral" :content-style="{color: 'black', padding: '20px'}" side="left"
-      v-model="drawer" :breakpoint="768" :value="true">
+    <q-layout-drawer content-class="bg-neutral" content-style="{color: 'black', padding: '20px', padding-top: '70px'}" 
+    side="left" overlay="true"
+    behavior="mobile"
+    breakpoint="768"
+      v-model="drawer">
       <p v-if="currentUser" class="bg-primary text-white q-pa-md"><b>Usuário:</b> {{currentUser.email}}</p>
 
       <!-- Lista de menu -->

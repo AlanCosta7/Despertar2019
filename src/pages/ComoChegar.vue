@@ -1,9 +1,9 @@
 <template>
   <q-page>
     <div id="floating-panel">
-      <q-select placeholder="Partida" v-model="select" :options="selectOptions" color="primary" inverted class="fixed" style="width: 100%; top: 50px" />
-      <q-btn icon="gps_fixed" round color="white" text-color="tertiary" class="fixed q-mr-lg" style="right: 18px; bottom: 60px" @click="addMinhaLoc(minhaposicao)"></q-btn>
-      <q-btn icon="navigation" round color="white" text-color="tertiary" class="fixed q-mr-lg" style="right: 18px; bottom: 110px" @click="abrirApp()"></q-btn>
+      <q-select placeholder="Partida" v-model="select" :options="selectOptions" color="primary" inverted class="fixed z-top" style="width: 30%; top: 50px; right: 0px" />
+      <q-btn icon="gps_fixed" round color="white" text-color="tertiary" class="fixed z-top q-mr-lg" style="right: 18px; bottom: 60px" @click="addMinhaLoc(minhaposicao)"></q-btn>
+      <q-btn icon="navigation" round color="white" text-color="tertiary" class="fixed z-top q-mr-lg" style="right: 18px; bottom: 110px" @click="abrirApp()"></q-btn>
     </div>
     <gmap-map id="maps" :center="center" :zoom="10" :map-type-id="mapTypeId">
       <gmap-marker v-for="(item, index) in markers" :key="index" :position="item.position" :click="center=item.position" />
@@ -70,7 +70,7 @@
             zoom: 5,
             center: latlng,
             mapTypeId: google.maps.MapTypeId.TRANSIT,
-            disableDefaultUI: true
+            disableDefaultUI: false
           };
 
           map = new google.maps.Map(document.getElementById("maps"), options);
@@ -109,7 +109,7 @@
             zoom: 5,
             center: latlng,
             mapTypeId: google.maps.MapTypeId.TRANSIT,
-            disableDefaultUI: true
+            disableDefaultUI: false
           };
 
           map = new google.maps.Map(document.getElementById("maps"), options);

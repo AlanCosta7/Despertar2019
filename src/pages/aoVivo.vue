@@ -1,6 +1,6 @@
 <template>
-    <q-page>
-        <q-scroll-area id="scroll" style="width: 100%">
+    <q-page class="flex flex-center">
+        <q-scroll-area id="scroll" style="width: 100%" >
             <q-list class="flex flex-center items-start timeline column">
                 <q-item class="qitempost column shadow-1" v-for='item in posts' :key='item.id'>
                     <div class="row postint" link @click.native="lerposte(item)">
@@ -22,6 +22,7 @@
                 </q-item>
             </q-list>
         </q-scroll-area>
+        <div class="fixed" v-if="posts"><h6>Ainda não temos posts</h6></div>
         <q-btn round v-if="admin" color="secondary" @click="editar = true" class="fixed" icon="add" style="right: 18px; bottom: 50px" />
 
         <q-modal v-model="editar" maximized v-if="admin">
@@ -73,7 +74,6 @@
                 <h5 class="q-my-xl">Autor: {{editedItem.autorpost}}</h5>
             </q-modal-layout>
         </q-modal>
-
     </q-page>
 </template>
 
@@ -101,16 +101,13 @@
             }
         },
         mounted() {
-            this.$store.dispatch('customLoading')
+            //this.$store.dispatch('customLoading')
             var width = window.innerWidth;
             var height = window.innerHeight;
             let loading = this.loading
             document.getElementById('scroll').style.height = height - 80 + 'px'
 
-            if (!loading) {
-                Loading.hide()
-
-            }
+            
         },
         computed: {
             ...Vuex.mapGetters({

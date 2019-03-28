@@ -1,5 +1,5 @@
 <template class="templatehome">
-  <q-page>
+  <q-page id="page-index">
     <div>
       <div class="fundoalfa"></div>
       <div class="paralax flex flex-center">
@@ -27,21 +27,20 @@
           </div>
         </div>
       </div>
-      <img width="100%" class="calcada1 desktop-only z-top" src="../assets/landpage/ZigZag.png" alt="calçada copacabana">
+      <img width="100%" class="calcada1 desktop-only" src="../assets/landpage/ZigZag.png" alt="calçada copacabana">
 
       <div class="column flex flex-center base2 desktop-only">
-        <h2 class="text-weight-bold text-white z-top desktop-only h2desperte">Desperte-se</h2>
-        <q-btn @click=playvideo() size="90px" flat round class="z-top">
+        <h2 class="text-weight-bold text-white desktop-only h2desperte">Desperte-se</h2>
+        <q-btn @click=playvideo() size="90px" flat round>
           <img width="100%" class="desktop-only" src="../assets/landpage/play.png" alt="botão play">
         </q-btn>
-        <h2 class="text-weight-light text-white z-top h2desperte2">Aperte o play!</h2>
+        <h2 class="text-weight-light text-white h2desperte2">Aperte o play!</h2>
 
         <video autoplay muted loop class="myVideo1">
           <source src="../assets/landpage/novotease.mp4" type="video/mp4">
           <source src="../assets/landpage/novotease.webm" type="video/webm">
         </video>
       </div>
-      <img width="100%" class="zap3 desktop-only z-top" src="../assets/landpage/ZigZag3.png" alt="onda">
 
       <div class="column flex flex-center paralax2 desktop-only">
         <div class="bgcolum column flex flex-center">
@@ -91,14 +90,19 @@
       </div>
     </div>
 
-    <q-modal v-model="opened" class="z-max desktop-only">
-      <iframe width="700px" height="450px" :src="video" class="videoteaser"
-        frameborder="0"></iframe>
+    <q-modal v-model="opened" class="z-max desktop-only" maximized>
+        <q-btn v-if="opened" round size="md" @click.native="opened = false" icon="close" color="negative"   
+        style="right: 48%; top: 18px"
+        class="z-max fixed q-mr-lg" />
+      <iframe width="100%" height="100%" :src="video" class="videoteaser"
+        frameborder="0">
+      </iframe>
     </q-modal>
 
     <q-modal v-model="openedinscri" class="z-max desktop-only">
       <iframe width="850px" height="750px" id='inscricao' src="https://www.pallua.com.br/captacao/projeto/evento_despertar_2019"></iframe>
     </q-modal>
+
     <div class="z-top footer bg-white">
       <!-- footer content -->
       <div class="row">
@@ -175,280 +179,5 @@
 </script>
 
 <style>
-  .base {
-    position: relative;
-    height: 750px;
-    width: 100%;
-    top: 2%
-  }
-
-  .base2 {
-    position: relative;
-    height: 750px;
-    margin-top: 0px;
-    width: 100%;
-    object-fit: cover;
-    object-position: center
-  }
-
-  .paralax {
-    height: 750px;
-    width: 100%;
-    background-image: url("../assets/landpage/backGround.jpg");
-    background-attachment: fixed;
-    background-position: top;
-    background-repeat: no-repeat;
-    background-size: cover;
-  }
-
-  .fundoalfa {
-    position: absolute;
-    height: 750px;
-    width: 100%;
-    background-color: rgba(100, 100, 100, .30);
-
-  }
-
-  @media only screen and (max-device-width: 1366px) {
-    .parallax {
-      background-attachment: scroll;
-    }
-  }
-
-  .footer {
-    position: relative;
-  }
-
-  h2 {
-    text-align: center;
-    text-transform: uppercase;
-  }
-
-  .h2desperte {
-    font-family: lulobold;
-    margin-top: 180px
-  }
-
-  .h2desperte2 {
-    font-family: lulo
-  }
-
-  .myVideo1 {
-    position: absolute;
-    margin-top: 0px;
-    padding: 0;
-    min-width: 100%;
-    max-width: 100%;
-    width: auto;
-    height: 750px;
-    object-fit: cover;
-  }
-
-  .myVideo2 {
-    position: absolute;
-    margin-top: 0px;
-    padding: 0;
-    min-width: 100%;
-    max-width: 100%;
-    height: 750px;
-    object-fit: cover;
-    object-position: center;
-  }
-
-  .calcada1 {
-    position: absolute;
-    width: 100%;
-    padding: 0;
-    margin-top: -150px;
-    object-fit: cover;
-    object-position: center
-  }
-
-  .zap3 {
-    position: relative;
-    margin-top: -70px;
-  }
-
-  .bg {
-    width: 100%
-  }
-
-  .tema {
-    height: 100px;
-    object-fit: cover;
-  }
-
-  .logo {
-    position: absolute;
-    top: 10%;
-    text-align: center
-  }
-
-  .local1 {
-    font-family: lulobold;
-    text-transform: uppercase;
-    color: #1b0600;
-    font-weight: bold;
-    font-size: 1.5em;
-    padding-left: 10px
-  }
-
-  .local2 {
-    font-family: lulobold;
-    text-transform: uppercase;
-    color: #1b0600;
-    font-weight: bold;
-    font-size: 1em;
-    padding-left: 10px
-  }
-
-  .data1 {
-    font-family: lulobold;
-    text-transform: uppercase;
-    color: white;
-    font-weight: bold;
-    font-size: 2em;
-    padding-left: 10px;
-    margin-bottom: 0
-  }
-
-  .data2 {
-    font-family: lulobold;
-    text-transform: uppercase;
-    color: white;
-    font-weight: 900;
-    font-size: 1em;
-    padding-left: 10px;
-    margin-bottom: 0
-  }
-
-  .maracana {
-    position: absolute;
-    width: 380px;
-    height: 450px;
-    bottom: 250px;
-    right: 0;
-    object-fit: cover;
-    object-position: left
-  }
-
-  .niteroi {
-    position: absolute;
-    width: auto;
-    height: auto;
-    bottom: -20px;
-    right: 0px;
-    object-fit: cover;
-    object-position: left;
-  }
-
-  .bondinho {
-    position: absolute;
-    width: 750px;
-    height: 280px;
-    bottom: 0;
-    left: -70px;
-    object-fit: cover;
-
-  }
-
-  .birds {
-    position: absolute;
-    width: 500px;
-    top: 10px;
-    left: 80px;
-  }
-
-  .sub1 {
-    font-family: lulo;
-    text-transform: uppercase;
-    color: #e4701f;
-    font-size: .75em
-  }
-
-  .paralax2 {
-    position: relative;
-    margin-top: -200px;
-    background-color: #e4701f;
-    height: 1000px;
-  }
-
-  .paralax3 {
-    position: relative;
-    margin-top: -90px;
-    background-color: #e4701f;
-    height: 1300px;
-  }
-
-  .bgcolum {
-    position: relative;
-    text-align: center;
-    margin-top: -20px;
-    z-index: 1000
-  }
-
-  .bgcolum2 {
-    width: 100%;
-    position: relative;
-    text-align: center;
-    font-size: .75em;
-    margin-top: 50px
-  }
-
-  .texto1 {
-    font-family: lulobold;
-    padding: 10px;
-    margin: 0;
-    width: 100%;
-  }
-
-  .texto2 {
-    font-family: lulo;
-    text-align: center;
-    padding: 15px;
-    margin: 0;
-    width: 100%;
-  }
-
-  .fe1 {
-    font-family: julietta;
-    color: white;
-    font-size: 5em
-  }
-
-  .fe2 {
-    font-family: julietta;
-    color: white;
-    font-size: 2.5em
-  }
-
-  @font-face {
-    font-family: julietta;
-    src: url('../assets/font/julietta.ttf');
-  }
-
-  @font-face {
-    font-family: lulobold;
-    src: url('../assets/font/LuloCleanW01OneBold.ttf');
-  }
-
-  @font-face {
-    font-family: lulo;
-    src: url('../assets/font/LuloCleanW01One.ttf');
-  }
-
-  .btnins {
-    position: relative;
-    font-family: lulobold;
-  }
-
-  h4 {
-    font-size: 1.75em
-  }
-
-  .imgJBB {
-    height: 75px;
-    object-fit: cover;
-
-  }
+  
 </style>
