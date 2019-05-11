@@ -47,7 +47,7 @@
     </template>
     
     <script>
-    import * as firebase from 'firebase'
+    import { $db, $storage } from '../plugins/firebase'
     import moment from 'moment'
 
     export default {
@@ -117,13 +117,13 @@
                         nome: this.usuario.nome,
                         }
     
-                    var newPostKey = firebase.database().ref().child('chat').push().key
+                    var newPostKey = $db.ref().child('chat').push().key
                     var updates = {}    
                     updates['/chat/' + newPostKey] = postData
                     
                     let imageUrl
                     var key = newPostKey
-                    return firebase.database().ref().update(updates)
+                    return $db.ref().update(updates)
                     .then(     
                             this.texto = ""
                         )
@@ -134,7 +134,7 @@
                     .then(key => {
                             const filename = this.image.name
                             const ext = filename.slice(filename.lastIndexOf('.'))
-                            firebase.storage().ref('chat/' + key + ext).put(this.image)  
+                            $storage.ref('chat/' + key + ext).put(this.image)  
                         .then(     
                             this.clearForm() 
                         )
@@ -158,7 +158,7 @@
             }
     
     }    
-    </script>
+</script>
 <style>
       .input {
         width: 100%;

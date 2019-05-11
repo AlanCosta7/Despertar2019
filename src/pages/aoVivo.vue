@@ -34,7 +34,7 @@
                 <q-field helper="Autor do post">
                     <q-input class="col-8" type="text" float-label="Autor" v-model="autorpost" />
                 </q-field>
-                <input type="file" style="display: none" ref="fileInput" accept="image/*" @change="onFilePicked"></input>
+                <input type="file" style="display: none" ref="fileInput" accept="image/*" @change="onFilePicked" />
                 <img :src="imageUrl" class="image">
 
                 <q-btn class="col-2" icon="photo_camera" color="primary" :disabled="loading" :loading="loading" @click="onPickFile">
@@ -78,7 +78,7 @@
 </template>
 
 <script>
-    import * as firebase from 'firebase'
+    import { $db, $storage } from '../plugins/firebase'
     import moment from 'moment'
     import { mapGetters } from 'vuex'
     import { Loading, QSpinnerFacebook } from 'quasar'
@@ -131,7 +131,7 @@
               var key = this.currentUser.uid
               console.log(key)
 
-              return firebase.database().ref().child('posts/' + uid + '/favorito/' + key).update({user: user, amei: 'red'})
+              return $db.ref().child('posts/' + uid + '/favorito/' + key).update({user: user, amei: 'red'})
             },
             lerposte(value) {
                 this.editedIndex = this.posts.indexOf(value)
@@ -167,13 +167,13 @@
                     imageUrl: this.imageUrl,
                 }
 
-                var newPostKey = firebase.database().ref().child('posts').push().key
+                var newPostKey = $db.ref().child('posts').push().key
                 var updates = {}
                 updates['/posts/' + newPostKey] = postData
 
                 let imageUrl
                 var key = newPostKey
-                return firebase.database().ref().update(updates)
+                return $db.ref().update(updates)
                     .then((data) => {
                         const key = newPostKey
                         return key
@@ -181,12 +181,12 @@
                     .then(key => {
                         const filename = this.image.name
                         const ext = filename.slice(filename.lastIndexOf('.'))
-                        firebase.storage().ref('posts/' + key + ext).put(this.image)
+                        $storage.ref('posts/' + key + ext).put(this.image)
                             .then(function (snapshot) {
                                 console.log('Uploaded', snapshot.totalBytes, 'bytes.');
                                 snapshot.ref.getDownloadURL().then(function (url) {
                                     console.log('File available at', url)
-                                    firebase.database().ref('posts').child(key).update({ imageUrl: url, uidposts: newPostKey })
+                                    $db.ref('posts').child(key).update({ imageUrl: url, uidposts: newPostKey })
                                 })
                             })
                             .then(
