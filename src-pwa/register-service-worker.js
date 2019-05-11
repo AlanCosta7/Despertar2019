@@ -15,13 +15,28 @@ register(process.env.SERVICE_WORKER_FILE, {
   cached (registration) { // registration -> a ServiceWorkerRegistration instance
     console.log('Content has been cached for offline use.')
   },
-  updated (registration) { // registration -> a ServiceWorkerRegistration instance
+  updated(registration) {
     console.log('New content is available; please refresh.')
+
+    // // registration -> a ServiceWorkerRegistration instance
+    // const installing = registration.installing
+    // const waiting = registration.waiting
+    // if (installing || waiting) {
+    //   console.info('waiting or installing...')
+    //   return
+    // }
+
+    if (window.confirm('Existe uma versão disponível. Deseja atualizar?')) {
+      // window.__refreshing = true
+      window.location.reload(true)
+    } else {
+      console.info('Nova versão ignorada pelo usuário.')
+    }
   },
-  offline () {
+  offline() {
     console.log('No internet connection found. App is running in offline mode.')
   },
-  error (err) {
+  error(err) {
     console.error('Error during service worker registration:', err)
   }
 })
