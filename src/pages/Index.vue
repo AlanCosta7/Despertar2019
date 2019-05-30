@@ -41,7 +41,46 @@
           <source src="../assets/landpage/novotease.webm" type="video/webm">
         </video>
       </div>
-
+        <section class="fit bg-black">
+          <div class="container">
+            <div class="row flex flex-center">
+              <div class="col-xs-12 col-lg-3 flex flex-center">
+                <img width=270 height="270"
+                  id="imgHenrique">
+              </div>
+              <div class="col-xs-12 col-lg-3 flex flex-center">
+                <img width=270 height="270"
+                  id="imgAndreia">
+              </div>    
+              <div class="col-xs-12 col-lg-3 flex flex-center">
+                <img width=270 height="270"
+                  id="imgDavi">
+              </div>
+              <div class="col-xs-12 col-lg-3 flex flex-center">
+                <img width=270 height="270"
+                  id="imgGil">  
+              </div> 
+            </div>  
+            <div class="row flex flex-center q-mt-lg">
+              <div class="col-xs-12 col-lg-3 flex flex-center"> 
+                <img width=270 height="270"
+                  id="imgBeone">
+              </div>
+              <div class="col-xs-12 col-lg-3 flex flex-center">
+                <img width=270 height="270"
+                  id="imgPc">
+              </div>    
+              <div class="col-xs-12 col-lg-3 flex flex-center">
+                <img width=270 height="270"
+                  id="imgSola">
+              </div>    
+              <div class="col-xs-12 col-lg-3 flex flex-center">
+                <img width=270 height="270"
+                  id="imgSolk">
+              </div>
+            </div>
+          </div>
+        </section>
       <div class="column flex flex-center paralax2 desktop-only">
         <div class="bgcolum column flex flex-center">
           <h4 class="text-weight-bold uppercase text-white texto1">Qual despertar você pretende adquirir?</h4>
@@ -89,7 +128,6 @@
 
       </div>
     </div>
-
     <q-modal v-model="opened" class="z-max desktop-only" maximized>
         <q-btn v-if="opened" round size="md" @click.native="opened = false" icon="close" color="negative"   
         style="right: 48%; top: 18px"
@@ -109,32 +147,21 @@
         <div class="col-lg-2 col-xs-12 col-md-2 self-start">
           <div class="q-pa-lg">
             <p class="sub1">Organização</p>
-            <img width="150px" class="imgJBB" src="../assets/landpage/JBB.png" alt="logo JBB">
+            <img width="150" class="imgJBB" src="../assets/landpage/JBB.png" alt="logo JBB">
           </div>
         </div>
         <div class="col-lg-7 col-xs-12 col-md-5 self-start">
           <div class="q-pa-lg">
             <p class="sub1">Apoio</p>
-            <img width="84px" src="../assets/landpage/CBB.png" alt="logo CBB">
-            <img width="84px" src="../assets/landpage/JBC.png" alt="logo JBC">
-            <img width="84px" src="../assets/landpage/JUBERJ.png" alt="logo JUBERJ">
+            <img width="84" src="../assets/landpage/CBB.png" alt="logo CBB">
+            <img width="84" src="../assets/landpage/JBC.png" alt="logo JBC">
+            <img width="84" src="../assets/landpage/JUBERJ.png" alt="logo JUBERJ">
           </div>
         </div>
         <div class="col-lg-3 col-xs-12 col-md-5 self-start">
           <div class="q-pa-lg">
             <p class="sub1">Siga-nos</p>
-            <a href="https://www.facebook.com/juventudebatistabrasileira/">
-              <img width="54px" class="q-pa-sm" src="../assets/landpage/facebook.svg" alt="logo facebook">
-            </a>
-            <a href="https://twitter.com/oficialjbb">
-              <img width="54px" class="q-pa-sm" src="../assets/landpage/twitter.svg" alt="logo Twiter">
-            </a>
-            <a href="https://www.instagram.com/somosjbb/">
-              <img width="54px" class="q-pa-sm" src="../assets/landpage/instagram.svg" alt="logo Instagram">
-            </a>
-            <a href="https://www.youtube.com/user/juventudebatista">
-              <img width="54px" class="q-pa-sm" src="../assets/landpage/youtube.svg" alt="logo youtube">
-            </a>
+            <BaseSocial/>
           </div>
         </div>
       </div>
@@ -145,9 +172,11 @@
 <script>
   import { mapGetters } from 'vuex'
   import Vuex from 'vuex'
+  import BaseSocial from 'components/layout/base-social.vue'
 
   export default {
     name: 'PageIndex',
+    components: { BaseSocial },
     data() {
       return {
         opened: false,
