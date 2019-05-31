@@ -5,6 +5,8 @@
 
 import { register } from 'register-service-worker'
 
+window.__refreshing = false
+
 register(process.env.SERVICE_WORKER_FILE, {
   ready () {
     console.log('App is being served from cache by a service worker.')

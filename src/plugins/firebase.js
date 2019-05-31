@@ -19,6 +19,7 @@ const $fbApp = firebase.initializeApp(firebaseConfig)
 const $auth = $fbApp.auth()
 const $db = firebase.database()
 const $firestore = firebase.firestore()
+const $storage = firebase.storage()
 $firestore.settings({ timestampsInSnapshots: true })
 
 // Enable logging
@@ -46,4 +47,4 @@ export default ({ router, store }) => {
   })
 }
 
-export { firebase, $fbApp, $auth, $db, $firestore }
+export { firebase, $fbApp, $auth, $db, $firestore, $storage }

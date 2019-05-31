@@ -109,20 +109,19 @@
         <q-list class="flex flex-center items-start cardeleicao">
                 <h4>Sudeste</h4>
                 <q-item v-for='item in listaSudeste' :key='item.id' class="row">   
-                  </div>  
                     <q-card class="flex flex-center row">
                         <q-card-media class="col">
                             <img :src=item.imageUrl class="imgemCard"/>
                         </q-card-media>
                         <p class="col-8 nome">{{item.nome}}</p>
                         <div v-if="participouSD">
-                        <q-knob
-                        disable
-                        size="50px"
-                        v-model=item.voto
-                        :min="min"
-                        :max="max"
-                      /></div>
+                            <q-knob
+                            disable
+                            size="50px"
+                            v-model=item.voto
+                            :min="min"
+                            :max="max"/>
+                        </div>
                         <q-btn v-if="!participouSD" icon="favorite_border" flat round class="col" @click="votacaoSD(item)"></q-btn>
                     </q-card>
                 </q-item>
@@ -206,7 +205,8 @@
                                 v-model=item.voto
                                 :min="min"
                                 :max="max"
-                              /></div>
+                              />
+                        </div>
                         <q-btn v-if="!participouC" icon="favorite_border" flat round class="col" @click="votacaoC(item)"></q-btn>
                     </q-card>
                 </q-item>
@@ -218,7 +218,7 @@
       
 <script>
 import { uid, filter } from 'quasar'
-import firebase from 'firebase'
+import { $db, $storage } from '../plugins/firebase'
 import { mapGetters } from 'vuex'
 import Vuex from 'vuex'
 
@@ -248,7 +248,7 @@ export default {
               this.$q.fullscreen.toggle()
             },
             salve () {
-                firebase.database().ref('eleicao').update({
+                $db.ref('eleicao').update({
                     sudeste: this.sudeste,
                     sul: this.sul,
                     norte: this.norte,
@@ -287,10 +287,10 @@ export default {
                     var listaUsuarios = this.listaUsuarios
                   Object.assign(listaUsuarios[this.editedIndex], this.editedItem)
                   var voto = listaUsuarios[this.editedIndex].voto + 1
-               firebase.database().ref('usuarios/' + editedItem.uid + '/user').update({voto: voto})
+               $db.ref('usuarios/' + editedItem.uid + '/user').update({voto: voto})
              }
                 var uid = this.user.uid
-                firebase.database().ref('usuarios/' + uid + '/user').update({participouSD: true})
+                $db.ref('usuarios/' + uid + '/user').update({participouSD: true})
                 this.$store.dispatch('addListaCandidatos') 
                 this.votaritemSD = false   
             }, 
@@ -299,10 +299,10 @@ export default {
                     var listaUsuarios = this.listaUsuarios
                   Object.assign(listaUsuarios[this.editedIndex], this.editedItem)
                   var voto = listaUsuarios[this.editedIndex].voto + 1
-               firebase.database().ref('usuarios/' + editedItem.uid + '/user').update({voto: voto})
+               $db.ref('usuarios/' + editedItem.uid + '/user').update({voto: voto})
             } 
                var uid = this.user.uid
-               firebase.database().ref('usuarios/' + uid + '/user').update({participouS: true})
+               $db.ref('usuarios/' + uid + '/user').update({participouS: true})
                this.$store.dispatch('addListaCandidatos') 
                this.votaritemS = false   
             },
@@ -311,10 +311,10 @@ export default {
                     var listaUsuarios = this.listaUsuarios
                   Object.assign(listaUsuarios[this.editedIndex], this.editedItem)
                   var voto = listaUsuarios[this.editedIndex].voto + 1
-               firebase.database().ref('usuarios/' + editedItem.uid + '/user').update({voto: voto})
+               $db.ref('usuarios/' + editedItem.uid + '/user').update({voto: voto})
              }
                var uid = this.user.uid
-               firebase.database().ref('usuarios/' + uid + '/user').update({participouND: true})
+               $db.ref('usuarios/' + uid + '/user').update({participouND: true})
                this.$store.dispatch('addListaCandidatos') 
                this.votaritemND = false   
             },
@@ -323,10 +323,10 @@ export default {
                     var listaUsuarios = this.listaUsuarios
                   Object.assign(listaUsuarios[this.editedIndex], this.editedItem)
                   var voto = listaUsuarios[this.editedIndex].voto + 1
-               firebase.database().ref('usuarios/' + editedItem.uid + '/user').update({voto: voto})
+               $db.ref('usuarios/' + editedItem.uid + '/user').update({voto: voto})
              }
                var uid = this.user.uid
-               firebase.database().ref('usuarios/' + uid + '/user').update({participouN: true})
+               $db.ref('usuarios/' + uid + '/user').update({participouN: true})
                this.$store.dispatch('addListaCandidatos') 
                this.votaritemN = false   
             },   
@@ -335,10 +335,10 @@ export default {
                     var listaUsuarios = this.listaUsuarios
                   Object.assign(listaUsuarios[this.editedIndex], this.editedItem)
                   var voto = listaUsuarios[this.editedIndex].voto + 1
-               firebase.database().ref('usuarios/' + editedItem.uid + '/user').update({voto: voto})
+               $db.ref('usuarios/' + editedItem.uid + '/user').update({voto: voto})
              }
                var uid = this.user.uid
-               firebase.database().ref('usuarios/' + uid + '/user').update({participouC: true})
+               $db.ref('usuarios/' + uid + '/user').update({participouC: true})
                this.$store.dispatch('addListaCandidatos') 
                this.votaritemC = false   
             }   
