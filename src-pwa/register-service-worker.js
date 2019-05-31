@@ -35,10 +35,10 @@ register(process.env.SERVICE_WORKER_FILE, {
       console.info('Nova versão ignorada pelo usuário.')
     }
   },
-  offline () {
+  offline() {
     console.log('No internet connection found. App is running in offline mode.')
   },
-  error (err) {
+  error(err) {
     console.error('Error during service worker registration:', err)
   }
 })
