@@ -1,5 +1,5 @@
 <template>
-  <img class="base-logo" src="~assets/jbb_logo.png" alt="Logo JBB">
+  <img class="base-logo" src="~assets/jbb_logo.png" alt="Logo GarageThinking">
 </template>
 
 <script>
